@@ -28,6 +28,8 @@ services:
       - mysql-data:/var/lib/mysql
     ports:
       - 80:80
+    depends_on:
+      - mysql
 secrets:
   db_root_password:
     file: db_root_password.txt
