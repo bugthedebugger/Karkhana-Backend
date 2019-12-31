@@ -5,3 +5,5 @@ Homestead.json
 Homestead.yaml
 .env
 .phpunit.result.cache
+db_password.txt
+db_root_password.txt

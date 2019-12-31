@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    hostname: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
+      - MYSQL_DATABASE=appdb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+    restart: unless-stopped
+    ports:
+      - 3310:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    secrets:
+      - db_root_password
+      - db_password
+  app:
+    container_name: karkhana-app
+    hostname: karkhana-app
+    build:
+      context: .
+      dockerfile: app.dockerfile
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 80:80
+    depends_on:
+      - mysql
+secrets:
+  db_root_password:
+    file: db_root_password.txt
+  db_password:
+    file: db_password.txt
+
+volumes:
+  mysql-data:
