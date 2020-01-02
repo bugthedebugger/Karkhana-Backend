@@ -23,10 +23,9 @@ services:
     hostname: karkhana-app
     build:
       context: .
-      dockerfile: local.dockerfile
+      dockerfile: app.dockerfile
     volumes:
       - mysql-data:/var/lib/mysql
-      - /home/bugthedebugger/Documents/Karkhana-Rebranding/Karkhana-Backend/:/var/www/
     ports:
       - 80:80
     depends_on:
