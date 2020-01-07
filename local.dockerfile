@@ -17,6 +17,7 @@ RUN chown -hR www-data .
 
 COPY default.conf /etc/apache2/sites-enabled/000-default.conf
 
+RUN a2enmod rewrite
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
 EXPOSE 80
