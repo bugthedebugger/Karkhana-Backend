@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Blog;
+use App\Http\Controllers\Controller;
 
 class BlogsController extends Controller
 {
@@ -19,7 +20,7 @@ class BlogsController extends Controller
      * @return json
      */
     public function index() {
-
+        return ('Controlled!');
     }
 
     /**

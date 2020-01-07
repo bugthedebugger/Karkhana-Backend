@@ -102,7 +102,7 @@ $app->router->group([
 });
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
+    'namespace' => 'App\Http\Controllers\Admin\Blog',
     'prefix' => 'blog',
 ], function ($router) {
     require __DIR__.'/../routes/blog.php';
