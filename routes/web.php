@@ -14,3 +14,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/login/email', [
+    'as' => 'profile', 'uses' => 'Login\LoginController@login'
+]);
