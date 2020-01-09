@@ -102,6 +102,13 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->router->group([
+    'namespace' => 'App\Http\Controllers',
+    'prefix' => 'blog',
+], function ($router) {
+    require __DIR__.'/../routes/blog.php';
+});
+
 \Dusterio\LumenPassport\LumenPassport::routes($app, ['prefix' => 'v1/oauth']);
 
 return $app;
