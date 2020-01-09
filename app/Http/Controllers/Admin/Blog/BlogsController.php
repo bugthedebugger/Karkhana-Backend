@@ -19,7 +19,8 @@ class BlogsController extends Controller
      * Function to display the list of BLOGs
      * @return json
      */
-    public function index() {
+    public function index($language) {
+        dd($language);
         return ('Controlled!');
     }
 
