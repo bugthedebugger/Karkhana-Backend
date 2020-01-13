@@ -109,6 +109,10 @@ $app->router->group([
     require __DIR__.'/../routes/blog.php';
 });
 
+$app->routeMiddleware([
+    'lang' => App\Http\Middleware\LanguageMiddleware::class,
+]);
+
 \Dusterio\LumenPassport\LumenPassport::routes($app, ['prefix' => 'v1/oauth']);
 
 return $app;

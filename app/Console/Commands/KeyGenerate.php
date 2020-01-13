@@ -37,6 +37,15 @@ class KeyGenerate extends Command
      */
     public function handle()
     {
-        
+        $path = base_path('.env');
+        $key = \Illuminate\Support\Str::random(32);
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                'APP_KEY='.config('envKeys.app_key'), 'APP_KEY='.$key, file_get_contents($path)
+            ));
+        }
+
+         $this->info('Key Generated Successfully.');
+
     }
 }

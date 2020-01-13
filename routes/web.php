@@ -10,11 +10,17 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
-$router->get('/', function () use ($router) {
+$router->get('/', ['middleware' => ['lang'], function ($request, $language) use ($router) {
+	dd($language);
     return $router->app->version();
-});
+}]);
 
-$router->get('/login/email', [
-    'as' => 'profile', 'uses' => 'Login\LoginController@login'
+$router->post('v1/login/email', [
+    'as' => 'login.email', 'uses' => 'Login\LoginController@login'
 ]);
+
+$router->group(['prefix' => 'v1/pages'], function () use ($router) {
+    $router->post('/{page}', [
+    	'as' => 'pages', 'uses' => 'Login\LoginController@index'
+	]);
+});

@@ -29,12 +29,12 @@ class LoginController extends Controller
 
         if (Hash::check($request->password, $user->password))
         {
-            $passport = $user->createToken(config('envKeys.token.ApiToken', ['*']));
-            dd($passport);
+            $passport = $user->createToken(config('envKeys.token.ApiToken'));
+            // dd($passport->access_token);
             return [
                 'email'       => $user->email,
-                'token'       => 'asdsd',
-                'expiry_date' => '',
+                'token'       => $passport->accessToken,
+                'expiry_date' => time($passport->toArray()['token']->expires_at),
             ];
         }
         else

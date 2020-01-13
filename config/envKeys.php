@@ -8,5 +8,6 @@ return [
 	],
 	'token' => [
 		'ApiToken' => env('TOKEN_NAME')
-	]
+	],
+	'app_key' => env('APP_KEY')
 ];
