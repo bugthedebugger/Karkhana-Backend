@@ -15,5 +15,6 @@ class Blog extends Model
         'featured',
         'uuid',
         'author',
+        'published',
     ];
 }
