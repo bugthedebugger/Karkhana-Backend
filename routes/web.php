@@ -10,8 +10,8 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-$router->get('/', ['middleware' => ['lang'], function ($request, $language) use ($router) {
-	dd($language);
+$router->get('/', ['middleware' => ['lang'], function () use ($router) {
+	// dd($language);
     return $router->app->version();
 }]);
 
@@ -20,7 +20,7 @@ $router->post('v1/login/email', [
 ]);
 
 $router->group(['prefix' => 'v1/pages'], function () use ($router) {
-    $router->post('/{page}', [
-    	'as' => 'pages', 'uses' => 'Login\LoginController@index'
+    $router->get('/{page}', [
+    	'as' => 'pages', 'uses' => 'Pages\PageController@index'
 	]);
 });

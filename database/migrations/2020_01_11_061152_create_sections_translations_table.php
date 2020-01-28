@@ -16,7 +16,7 @@ class CreateSectionsTranslationsTable extends Migration
         Schema::create('sections_translations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->text('description')->nullable();
+            $table->json('data')->nullable();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('language_id')->unsigned()->index();
 

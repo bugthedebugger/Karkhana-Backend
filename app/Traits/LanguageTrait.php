@@ -3,10 +3,11 @@
 namespace App\Traits;
 
 use App\Model\Language;
+use Illuminate\Http\Request;
 
 trait LanguageTrait{
 
-	public function language($query, $language)
+	public function languageOfType($query, $language)
     {
         return $query->where('language_id', $language);
     }

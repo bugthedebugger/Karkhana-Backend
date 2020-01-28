@@ -12,5 +12,5 @@ class Role extends Model
 {
 	protected $table = 'roles';
 
-	private $protected = ['name', 'is_admin', 'description'];
+	protected $fillable = ['name', 'is_admin', 'description'];
 }

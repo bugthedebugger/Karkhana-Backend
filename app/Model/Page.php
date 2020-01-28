@@ -6,13 +6,16 @@
 
 namespace App\Model;
 
+use App\Model\Section;
 use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-	use LanguageTrait;
-
 	protected $table = 'pages';
 
-	private $protected = ['name', 'code', 'description'];
+	protected $fillable = ['name', 'code', 'description'];
+
+	public function sections(){
+		return $this->hasMany(Section::class, 'page_id');
+	}
 }
