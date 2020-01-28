@@ -17,7 +17,7 @@ class CreateBlogsTable extends Migration
             $table->bigIncrements('id');
             $table->softDeletes();
             $table->string('featured')->nullable();
-            $table->string('uuid');
+            $table->string('uuid')->index();
             $table->boolean('published')->default(false);
             $table->bigInteger('author')->unsigned()->index();
             $table->foreign('author')->references('id')->on('users')->onDelete('cascade');
