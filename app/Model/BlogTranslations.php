@@ -18,4 +18,8 @@ class BlogTranslation extends Model
         'body',
         'read_time',
     ];
+
+    public function blog() {
+        return $this->belongsTo('App\Model\Blog', 'uuid', 'uuid');
+    }
 }

@@ -18,7 +18,7 @@ class Blog extends Model
         'published',
     ];
 
-    public function allTranslation() {
+    public function allTranslations() {
         return $this->hasMany('App\Model\BlogTranslation', 'uuid', 'uuid');
     }
 
