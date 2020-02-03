@@ -6,8 +6,10 @@
     "type": "project",
     "require": {
         "php": "^7.2",
+        "brick/math": "^0.8.11",
         "dusterio/lumen-passport": "^0.2.15",
-        "laravel/lumen-framework": "^6.0"
+        "laravel/lumen-framework": "^6.0",
+        "ramsey/uuid": "^3.9"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

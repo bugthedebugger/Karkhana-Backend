@@ -18,11 +18,11 @@ class Blog extends Model
         'published',
     ];
 
-    public function allTranslations() {
+    public function translations() {
         return $this->hasMany('App\Model\BlogTranslation', 'uuid', 'uuid');
     }
 
-    public function translation($language) {
-        // TODO: Should return translated texts
+    public function translate(Language $language) {
+        return $this->translations()->where('language_id', $language->id);
     }
 }

@@ -104,8 +104,8 @@ $app->router->group([
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers\Admin\Blog',
-    'prefix' => 'admin/blog',
-    // 'middleware' => 'auth',
+    'prefix' => 'admin/',
+    'middleware' => 'auth',
 ], function ($router) {
     require __DIR__.'/../routes/blog.php';
 });

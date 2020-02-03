@@ -27,9 +27,12 @@ class TagsController extends Controller
         $tags = Tag::all();
         $tagList = [];
         foreach($tags as $tag) {
-            $tagList[] = $tag->translate($this->language);
+            $tagList[] = $tag->translate($this->language)->first();
         }
-        return $tagList;
+        return response()->json([
+            'message' => 'success',
+            'data' => $tagList,
+        ]);
     }
 
     /**
@@ -51,7 +54,7 @@ class TagsController extends Controller
             return response()->json([
                 'message' => $e->getMessage(),
                 'status' => 'error',
-            ]);
+            ],500);
         }
         return response()->json([
             'message' => 'Tag added successfully!',
