@@ -25,4 +25,8 @@ class Blog extends Model
     public function translate(Language $language) {
         return $this->translations()->where('language_id', $language->id);
     }
+
+    public function owner() {
+        return $this->belongsTo('App\User', 'author', 'id');
+    }
 }

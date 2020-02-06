@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlogTranslation extends Model
 {
+    protected $hidden = [
+        'language_id',
+        'deleted_at',
+    ];
 	protected $table = 'blogs_translation';
     protected $fillable = [
         'uuid',
