@@ -103,9 +103,14 @@ class BlogsController extends Controller
         ]);
 
         $blog = Blog::where('uuid', $uuid)->first();
-
+        $translation = $blog->translation($this->language)->first();
 
 
         return response()->json($blog);
     }
+
+    /**
+     * AWS S3 only provides fully qulaified url if temporaryURL is used like this: 
+     * Storage::disk('s3')->temporaryURL('images/3b8ad2c7b1be2caf24321c852103598a.jpg', \Carbon\Carbon::now()->addMinutes(15));
+     */
 }
