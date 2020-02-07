@@ -102,11 +102,7 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
-$app->router->group([
-    'namespace' => 'App\Http\Controllers\Admin\Blog',
-    'prefix' => 'admin/',
-    'middleware' => 'auth',
-], function ($router) {
+$app->router->group([], function ($router) {
     require __DIR__.'/../routes/blog.php';
 });
 

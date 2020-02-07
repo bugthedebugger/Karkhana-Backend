@@ -27,12 +27,16 @@ class BlogsController extends Controller
      * Function to display the list of BLOGs
      * @return json
      */
-    public function index() {
-        $blogs = Blog::all();
+    public function index(Request $request) {
+        $this->validate($request, [
+            'per_page' => 'required',
+        ]);
+
+        $blogs = Blog::paginate($request->per_page);
         $blogList = [];
         
         foreach($blogs as $blog) {
-            $translated = $blog->translate($this->language)->first();
+            $translated = $blog->translations()->first();
             if (is_null($translated))
                 continue;
             $blogList[] = [
@@ -46,71 +50,39 @@ class BlogsController extends Controller
             ];
         }
 
+        $blogs = collect($blogs);
+
         return response()->json([
             'message' => 'success',
+            'status' => 'success',
             'data' => $blogList,
+            "first_page_url" =>  $blogs['first_page_url'],
+            "from" =>  $blogs['from'],
+            "last_page" =>  $blogs['last_page'],
+            "last_page_url" =>  $blogs['last_page_url'],
+            "next_page_url" =>  $blogs['next_page_url'],
+            "path" => $blogs['path'],
+            "per_page" => $blogs['per_page'],
+            "prev_page_url" => $blogs['prev_page_url'],
+            "to" => $blogs['to'],
+            "total" => $blogs['total'],
         ]);
     }
 
     /**
-     * Function to create new BLOG
+     * Function to find BLOG by UUID
      * @return json
      */
-    public function create(Request $request) {
-        $this->validate($request, [
-            'title' => 'required',
-        ]);
-        
-        $uuid = Str::uuid();
-        $user = Auth::user();
-
-        \DB::beginTransaction();
-        try {
-            $blog = Blog::create([
-                'uuid' => $uuid,
-                'author' => $user->id, 
-            ]);
-            $blog->translations()->create([
-                'title' => $request->title,
-                'language_id' => $this->language->id,
-            ]);
-            \DB::commit();
-        } catch (\Exception $e) {
-            \DB::rollback();
-            \Log::error($e);
-            return response()->json([
-                'message' => $e->getMessage(),
-                'status' => 'error',
-            ]);
-        }
-
-        return response()->json([
-            'message' => 'Blog created successfully!',
-            'status' => 'success',
-            'data' => [
-                'uuid'=> $uuid,
-            ],
-        ]);
-    }
-
-    /**
-     * Funciton to autosave the BLOG
-     */
-
-    public function update(Request $request, $uuid) {
-        $this->validate($request, [
-            'title' => 'required',
-        ]);
-
+    public function findByUUID($uuid) {
         $blog = Blog::where('uuid', $uuid)->first();
-        $translation = $blog->translation($this->language)->first();
-
-
-        return response()->json($blog);
+        if($blog) {
+            // TODO: Return the blog
+        } else {
+            return response()->json([
+                'message' => 'Could not find blog.',
+                'status' => error,
+                'data' => $blogList,
+            ], 404);
+        }
     }
-
-    /**
-     * AWS S3 only provides fully qulaified url if temporaryURL is used like this: 
-     * Storage::disk('s3')->temporaryURL('images/3b8ad2c7b1be2caf24321c852103598a.jpg', \Carbon\Carbon::now()->addMinutes(15));
-     */
 }

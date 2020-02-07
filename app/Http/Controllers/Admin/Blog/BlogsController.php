@@ -11,32 +11,16 @@ use Auth;
 
 class BlogsController extends Controller
 {
-    /**
-     * Function to display the list of BLOGs
-     * @return json
-     */
-    public function index() {
-        $blogs = Blog::all();
-        $blogList = [];
-        
-        foreach($blogs as $blog) {
-            $translated = $blog->translate($this->language)->first();
-            if (is_null($translated))
-                continue;
-            $blogList[] = [
-                'uuid' => $translated->uuid,
-                'featured' => $blog->featured,
-                'author' => $blog->owner->name,
-                'title' => $translated->title,
-                'read_time' => $translated->read_time,
-                'created_at' => $translated->created_at,
-                'published' => $blog->published == 0 ? false: true,
-            ];
-        }
+
+    public function getUUID() {
+        $uuid = Str::uuid();
 
         return response()->json([
-            'message' => 'success',
-            'data' => $blogList,
+            'message' => 'UUID generated successfully!',
+            'status' => 'success',
+            'data' => [
+                'uuid'=> $uuid,
+            ],
         ]);
     }
 
