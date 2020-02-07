@@ -5,36 +5,10 @@ use App\Http\Controllers\Controller;
 use App\Model\Tag;
 use App\Model\Language;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Blog\TagsController as BaseTagsController;
 
-class TagsController extends Controller
+class TagsController extends BaseTagsController
 {
-    private $language = null;
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->language = Language::where('language', 'en')->first();
-    }
-
-    /**
-     * Function to display the list of Tags
-     * @return json
-     */
-    public function index() {
-        $tags = Tag::all();
-        $tagList = [];
-        foreach($tags as $tag) {
-            $tagList[] = $tag->translate($this->language)->first();
-        }
-        return response()->json([
-            'message' => 'success',
-            'data' => $tagList,
-        ]);
-    }
-
     /**
      * Function to store new Tag
      * @return json

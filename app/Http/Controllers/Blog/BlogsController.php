@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Blog;
+namespace App\Http\Controllers\Blog;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Model\Blog;
@@ -11,6 +11,18 @@ use Auth;
 
 class BlogsController extends Controller
 {
+    protected $language = null;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->language = Language::where('language', 'en')->first();
+    }
+
     /**
      * Function to display the list of BLOGs
      * @return json
