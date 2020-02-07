@@ -29,4 +29,8 @@ class Blog extends Model
     public function owner() {
         return $this->belongsTo('App\User', 'author', 'id');
     }
+
+    public function tags() {
+        return $this->belongsToMany('App\Model\Tag');
+    }
 }

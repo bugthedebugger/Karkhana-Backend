@@ -28,24 +28,29 @@ class TagsController extends Controller
             'per_page' => 'required',
         ]);
         $tags = Tag::paginate($request->per_page);
-        return $tags;
         $tagList = [];
         foreach($tags as $tag) {
-            $tagList[] = $tag->translate($this->language)->first();
+            $translated = $tag->translations()->first();
+            $tagList[] = [
+                'id' => $translated->id,
+                'name' => $translated->name,
+            ];
         }
+
+        $tags = collect($tags);
         return response()->json([
             'message' => 'success',
             'data' => $tagList,
-            'first_page_url' => $tags->first_page_url,
-            'from' => $tags->from,
-            'last_page' => $tags->last_page,
-            'last_page_url' => $tags->last_page_url,
-            'next_page_url' => $tags->next_page_url,
-            'path' => $tags->path,
-            'per_page' => $tags->per_page,
-            'prev_page_url' => $tags->prev_page_url,
-            'to' => $tags->to,
-            'total' => $tags->total,
+            'first_page_url' => $tags['first_page_url'],
+            'from' => $tags['from'],
+            'last_page' => $tags['last_page'],
+            'last_page_url' => $tags['last_page_url'],
+            'next_page_url' => $tags['next_page_url'],
+            'path' => $tags['path'],
+            'per_page' => $tags['per_page'],
+            'prev_page_url' => $tags['prev_page_url'],
+            'to' => $tags['to'],
+            'total' => $tags['total'],
         ]);
     }
 }

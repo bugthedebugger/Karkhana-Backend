@@ -12,6 +12,7 @@ use Auth;
 class BlogsController extends Controller
 {
     protected $language = null;
+    protected $showUnpublished = false;
 
     /**
      * Create a new controller instance.
@@ -32,22 +33,28 @@ class BlogsController extends Controller
             'per_page' => 'required',
         ]);
 
-        $blogs = Blog::paginate($request->per_page);
+        if($this->showUnpublished) {
+            $blogs = Blog::paginate($request->per_page);
+        } else {
+            $blogs = Blog::where('published', '=', true)->paginate();
+        }
         $blogList = [];
         
         foreach($blogs as $blog) {
-            $translated = $blog->translations()->first();
-            if (is_null($translated))
+            $translations = $blog->translations()->get();
+            if (is_null($translations))
                 continue;
-            $blogList[] = [
-                'uuid' => $translated->uuid,
-                'featured' => $blog->featured,
-                'author' => $blog->owner->name,
-                'title' => $translated->title,
-                'read_time' => $translated->read_time,
-                'created_at' => $translated->created_at,
-                'published' => $blog->published == 0 ? false: true,
-            ];
+            foreach($translations as $translated) {
+                $blogList[] = [
+                    'uuid' => $translated->uuid,
+                    'featured' => $blog->featured,
+                    'author' => $blog->owner->name,
+                    'title' => $translated->title,
+                    'read_time' => $translated->read_time,
+                    'created_at' => $translated->created_at,
+                    'published' => $blog->published == 0 ? false: true,
+                ];
+            }
         }
 
         $blogs = collect($blogs);
@@ -74,14 +81,48 @@ class BlogsController extends Controller
      * @return json
      */
     public function findByUUID($uuid) {
-        $blog = Blog::where('uuid', $uuid)->first();
+
+        if($this->showUnpublished) {
+            $blog = Blog::where('uuid', $uuid)->first();
+        } else {
+            $blog = Blog::where([
+                ['uuid', '=', $uuid],
+                ['published', '=', true],
+            ])->first();
+        }
+
         if($blog) {
-            // TODO: Return the blog
+            $translated = $blog->translations()->first();
+            $unFilteredTags = $blog->tags;
+            
+            foreach($unFilteredTags as $tag) {
+                $translatedTag = $tag->translations()->first();
+                $tags[] = [
+                    'id' => $tag->id,
+                    'name' => $translatedTag->name,
+                ];
+            }
+
+            $foundBlog = [
+                'uuid' => $translated->uuid,
+                'featured' => $blog->featured,
+                'author' => $blog->owner->name,
+                'title' => $translated->title,
+                'body' => $translated->body,
+                'tags' => $tags,
+                'read_time' => $translated->read_time . ' min',
+                'created_at' => $translated->created_at,
+                'published' => $blog->published == 0 ? false: true,
+            ];
+            return response()->json([
+                'message' => 'Blog found',
+                'status' => 'success',
+                'data' => $foundBlog,
+            ]);
         } else {
             return response()->json([
                 'message' => 'Could not find blog.',
-                'status' => error,
-                'data' => $blogList,
+                'status' => 'error',
             ], 404);
         }
     }

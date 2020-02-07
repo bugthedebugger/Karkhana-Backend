@@ -31,6 +31,11 @@ $router->group([
         'as' => 'admin.blog.update',
         'uses' => 'BlogsController@update',
     ]);
+
+    $router->get('/blog/{uuid}', [
+        'as' => 'admin.blog.find',
+        'uses' => 'BlogsController@findByUUID',
+    ]);
     
     $router->get('/tags', [
         'as' => 'admin.tags',
@@ -51,5 +56,10 @@ $router->group([
     $router->get('/', [
         'as' => 'blog.index',
         'uses' => 'BlogsController@index',
+    ]);
+
+    $router->get('/{uuid}', [
+        'as' => 'blog.find',
+        'uses' => 'BlogsController@findByUUID',
     ]);
 });

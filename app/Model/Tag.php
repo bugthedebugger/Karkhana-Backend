@@ -20,4 +20,8 @@ class Tag extends Model
 	public function translate(Language $language) {
 		return $this->translations()->where('language_id', $language->id);
 	}
+
+	public function blogs() {
+		return $this->belongsToMany('App\Models\Blog');
+	}
 }

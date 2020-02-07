@@ -7,10 +7,15 @@ use App\Model\Blog;
 use App\Model\Language;
 use Illuminate\Http\Request;
 use Auth;
+use App\Http\Controllers\Blog\BlogsController as BaseBlogsController;
 
-
-class BlogsController extends Controller
+class BlogsController extends BaseBlogsController
 {
+
+    public function __construct() {
+        $this->showUnpublished = true;
+        $this->language = Language::where('language', 'en')->first();
+    }
 
     public function getUUID() {
         $uuid = Str::uuid();
@@ -30,22 +35,49 @@ class BlogsController extends Controller
      */
     public function create(Request $request) {
         $this->validate($request, [
+            'uuid' => 'required',
             'title' => 'required',
         ]);
         
-        $uuid = Str::uuid();
+        $uuid = $request->uuid;
         $user = Auth::user();
+        $tags = $request->tags;
 
         \DB::beginTransaction();
         try {
-            $blog = Blog::create([
-                'uuid' => $uuid,
-                'author' => $user->id, 
-            ]);
-            $blog->translations()->create([
-                'title' => $request->title,
-                'language_id' => $this->language->id,
-            ]);
+            $blog = Blog::where('uuid', $uuid)->first();
+            
+            if ($blog) {
+                $blog->update([
+                    'author' => $user->id, 
+                    'featured' => $request->featured,
+                ]);
+            } else {
+                $blog = Blog::create([
+                    'uuid' => $uuid,
+                    'author' => $user->id,
+                    'featured' => $request->featured,
+                ]);
+            }
+
+            $blog->tags()->sync($tags);
+
+            $translation = $blog->translations()->where('language_id', $this->language->id)->first();
+            if($translation) {
+                $translation->update([
+                    'language_id' => $this->language->id,
+                    'title' => $request->title,
+                    'body' => $request->body,
+                    'read_time' => round(strlen(strip_tags($request->body))/200),
+                ]);
+            } else {
+                $blog->translations()->create([
+                    'language_id' => $this->language->id,
+                    'title' => $request->title,
+                    'body' => $request->body,
+                    'read_time' => round(strlen(strip_tags($request->body))/200),
+                ]);
+            }
             \DB::commit();
         } catch (\Exception $e) {
             \DB::rollback();
@@ -57,28 +89,12 @@ class BlogsController extends Controller
         }
 
         return response()->json([
-            'message' => 'Blog created successfully!',
+            'message' => 'Blog created/updated successfully!',
             'status' => 'success',
             'data' => [
                 'uuid'=> $uuid,
             ],
         ]);
-    }
-
-    /**
-     * Funciton to autosave the BLOG
-     */
-
-    public function update(Request $request, $uuid) {
-        $this->validate($request, [
-            'title' => 'required',
-        ]);
-
-        $blog = Blog::where('uuid', $uuid)->first();
-        $translation = $blog->translation($this->language)->first();
-
-
-        return response()->json($blog);
     }
 
     /**
