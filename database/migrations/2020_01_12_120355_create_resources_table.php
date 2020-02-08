@@ -19,6 +19,8 @@ class CreateResourcesTable extends Migration
             $table->integer('resourceable_id');
             $table->string('resourceable_type');
             $table->string('resource_type');
+            $table->string('identifier');
+            $table->integer('order');
             $table->timestamps();
         });
     }

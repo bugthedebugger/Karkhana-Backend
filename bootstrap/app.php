@@ -115,4 +115,9 @@ $app->routeMiddleware([
 
 \Dusterio\LumenPassport\LumenPassport::routes($app, ['prefix' => 'v1/oauth']);
 
+//CROS MIDDLEWARE
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
+
 return $app;

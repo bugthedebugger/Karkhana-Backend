@@ -16,6 +16,10 @@ class CreateSectionsTable extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
+            
+            $table->integer('page_id')->unsigned()->index();
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
