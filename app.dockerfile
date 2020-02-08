@@ -14,12 +14,12 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 
 WORKDIR /var/www
 RUN chown -hR www-data .
-RUN chmod -R 777 /var/www/storage 
 
 COPY .env.example /var/www/.env
 
 COPY default.conf /etc/apache2/sites-enabled/000-default.conf
 COPY ./ /var/www/
+RUN chmod -R 777 /var/www/storage 
 
 RUN composer install
 
