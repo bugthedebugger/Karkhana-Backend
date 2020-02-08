@@ -26,6 +26,16 @@ $router->group([
         'as' => 'admin.blog.create',
         'uses' => 'BlogsController@create',
     ]);
+
+    $router->post('/blog/publish/{uuid}', [
+        'as' => 'admin.blog.publish',
+        'uses' => 'BlogsController@publish',
+    ]);
+
+    $router->post('/blog/unpublish/{uuid}', [
+        'as' => 'admin.blog.publish',
+        'uses' => 'BlogsController@unPublish'
+    ]);
     
     $router->post('/blog/update/{uuid}', [
         'as' => 'admin.blog.update',
@@ -56,6 +66,11 @@ $router->group([
     $router->get('/', [
         'as' => 'blog.index',
         'uses' => 'BlogsController@index',
+    ]);
+
+    $router->get('/tags', [
+        'as' => 'tag.index',
+        'uses' => 'TagsController@index',
     ]);
 
     $router->get('/{uuid}', [
