@@ -27,6 +27,11 @@ $router->group([
         'uses' => 'BlogsController@create',
     ]);
 
+    $router->delete('/blog/delete/{uuid}', [
+        'as' => 'admin.blog.delete',
+        'uses' => 'BlogsController@delete',
+    ]);
+
     $router->post('/blog/publish/{uuid}', [
         'as' => 'admin.blog.publish',
         'uses' => 'BlogsController@publish',
@@ -40,6 +45,21 @@ $router->group([
     $router->post('/blog/update/{uuid}', [
         'as' => 'admin.blog.update',
         'uses' => 'BlogsController@update',
+    ]);
+
+    $router->get('/blog/gallery/{uuid}', [
+        'as' => 'admin.gallery.find',
+        'uses' => 'GalleryController@getGallery',
+    ]);
+
+    $router->post('/blog/gallery/{uuid}/upload', [
+        'as' => 'admin.gallery.upload',
+        'uses' => 'GalleryController@upload'
+    ]);
+
+    $router->delete('/blog/gallery/{uuid}/delete', [
+        'as' => 'admin.gallery.upload',
+        'uses' => 'GalleryController@delete'
     ]);
 
     $router->get('/blog/{uuid}', [
@@ -56,6 +76,11 @@ $router->group([
         'as' => 'admin.tags.store',
         'uses' => 'TagsController@store',
     ]);
+
+    $router->delete('/tags/delete/{tag}', [
+        'as' => 'admin.tags.delete',
+        'uses' => 'TagsController@delete',
+    ]);
     
 });
 
@@ -71,6 +96,11 @@ $router->group([
     $router->get('/tags', [
         'as' => 'tag.index',
         'uses' => 'TagsController@index',
+    ]);
+
+    $router->get('/gallery/{uuid}', [
+        'as' => 'admin.gallery.find',
+        'uses' => 'GalleryController@getGallery',
     ]);
 
     $router->get('/{uuid}', [

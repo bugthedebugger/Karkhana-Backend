@@ -24,3 +24,8 @@ $router->group(['prefix' => 'v1/pages'], function () use ($router) {
     	'as' => 'pages', 'uses' => 'Pages\PageController@index'
 	]);
 });
+
+$router->get('/languages', [
+    'as' => 'lanugages',
+    'uses' => 'LanguageController@index',
+]);

@@ -12,5 +12,5 @@ class Language extends Model
 	
 	protected $table = 'languages';
 
-	protected $fillable = ['language', 'is_default', 'description'];
+	protected $fillable = ['language', 'is_default', 'description', 'name'];
 }

@@ -126,6 +126,27 @@ class BlogsController extends BaseBlogsController
         }
     }
 
+    public function delete($uuid) {
+        $blog = Blog::where('uuid', $uuid)->first();
+        \DB::beginTransaction();
+        try {
+            $blog->delete();
+            \DB::commit();
+        } catch(\Exception $e) {
+            \DB::rollback();
+            \Log::error($e);
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status' => 'error',
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Blog deleted successfully!',
+            'status' => 'success',
+        ]);
+    }
+
     public function unPublish($uuid) {
         $blog = Blog::where('uuid', $uuid)->first();
 
@@ -154,9 +175,4 @@ class BlogsController extends BaseBlogsController
             ], 404);
         }
     }
-
-    /**
-     * AWS S3 only provides fully qulaified url if temporaryURL is used like this: 
-     * Storage::disk('s3')->temporaryURL('images/3b8ad2c7b1be2caf24321c852103598a.jpg', \Carbon\Carbon::now()->addMinutes(15));
-     */
 }

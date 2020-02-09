@@ -7,7 +7,7 @@ use App\Model\Blog;
 use App\Model\Language;
 use Illuminate\Http\Request;
 use Auth;
-
+use Storage;
 
 class BlogsController extends Controller
 {
@@ -34,9 +34,9 @@ class BlogsController extends Controller
         ]);
 
         if($this->showUnpublished) {
-            $blogs = Blog::paginate($request->per_page);
+            $blogs = Blog::orderBy('created_at', 'desc')->paginate($request->per_page);
         } else {
-            $blogs = Blog::where('published', '=', true)->paginate();
+            $blogs = Blog::where('published', '=', true)->orderBy('created_at', 'desc')->paginate($request->per_page);
         }
         $blogList = [];
         
@@ -45,9 +45,14 @@ class BlogsController extends Controller
             if (is_null($translations))
                 continue;
             foreach($translations as $translated) {
+                if(Storage::disk('s3')->exists($blog->featured))
+                    $featuredImage = Storage::disk('s3')->temporaryURL($blog->featured, \Carbon\Carbon::now()->addMinutes(15));
+                else 
+                    $featuredImage = null;
+
                 $blogList[] = [
                     'uuid' => $translated->uuid,
-                    'featured' => $blog->featured,
+                    'featured' => $featuredImage,
                     'author' => $blog->owner->name,
                     'title' => $translated->title,
                     'read_time' => $translated->read_time,
@@ -94,6 +99,7 @@ class BlogsController extends Controller
         if($blog) {
             $translated = $blog->translations()->first();
             $unFilteredTags = $blog->tags;
+            $tags = null;
             
             foreach($unFilteredTags as $tag) {
                 $translatedTag = $tag->translations()->first();
@@ -103,9 +109,14 @@ class BlogsController extends Controller
                 ];
             }
 
+            if(Storage::disk('s3')->exists($blog->featured))
+                $featuredImage = Storage::disk('s3')->temporaryURL($blog->featured, \Carbon\Carbon::now()->addMinutes(15));
+            else 
+                $featuredImage = null;
+
             $foundBlog = [
                 'uuid' => $translated->uuid,
-                'featured' => $blog->featured,
+                'featured' => $featuredImage,
                 'author' => $blog->owner->name,
                 'title' => $translated->title,
                 'body' => $translated->body,

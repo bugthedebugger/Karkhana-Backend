@@ -13,11 +13,13 @@ class LanguageSeeder extends Seeder
     {
         DB::table('languages')->insert([
             'language' => 'en',
+            'name' => 'English',
             'description' => 'This is english language',
         ]);
 
         DB::table('languages')->insert([
-            'language' => 'nep',
+            'language' => 'np',
+            'name' => 'Nepali',
             'description' => 'This is nepali language',
         ]);
     }
