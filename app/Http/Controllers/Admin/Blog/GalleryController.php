@@ -42,7 +42,7 @@ class GalleryController extends BaseGalleryController
             \DB::rollback();
             \Log::error($e);
             return response()->json([
-                'message' => $e->getMessage,
+                'message' => $e->getMessage(),
                 'status' => 'error',
             ], 500);;
         }
@@ -77,7 +77,7 @@ class GalleryController extends BaseGalleryController
             \DB::rollback();
             \Log::error($e);
             return response()->json([
-                'message' => $e->getMessage,
+                'message' => $e->getMessage(),
                 'status' => 'error',
             ], 500);;
         }
