@@ -37,11 +37,13 @@ class BlogsController extends BaseBlogsController
         $this->validate($request, [
             'uuid' => 'required',
             'title' => 'required',
+            'language' => 'required',
         ]);
         
         $uuid = $request->uuid;
         $user = Auth::user();
         $tags = $request->tags;
+        $language = Language::where('language', $request->language)->first();
 
         \DB::beginTransaction();
         try {
@@ -62,17 +64,17 @@ class BlogsController extends BaseBlogsController
 
             $blog->tags()->sync($tags);
 
-            $translation = $blog->translations()->where('language_id', $this->language->id)->first();
+            $translation = $blog->translations()->where('language_id', $language->id)->first();
             if($translation) {
                 $translation->update([
-                    'language_id' => $this->language->id,
+                    'language_id' => $language->id,
                     'title' => $request->title,
                     'body' => $request->body,
                     'read_time' => round(strlen(strip_tags($request->body))/200),
                 ]);
             } else {
                 $blog->translations()->create([
-                    'language_id' => $this->language->id,
+                    'language_id' => $language->id,
                     'title' => $request->title,
                     'body' => $request->body,
                     'read_time' => round(strlen(strip_tags($request->body))/200),
