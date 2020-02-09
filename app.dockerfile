@@ -22,7 +22,6 @@ COPY ./ /var/www/
 RUN chmod -R 777 /var/www/storage 
 
 RUN composer install
-RUN php artisan passport:install
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
