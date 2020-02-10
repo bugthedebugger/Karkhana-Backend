@@ -81,6 +81,8 @@ class BlogsController extends Controller
             "prev_page_url" => $blogs['prev_page_url'],
             "to" => $blogs['to'],
             "total" => $blogs['total'],
+        ],200, [
+            'Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8',
         ]);
     }
 
