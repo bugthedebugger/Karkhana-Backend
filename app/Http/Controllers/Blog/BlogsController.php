@@ -57,7 +57,7 @@ class BlogsController extends Controller
                     'featured' => $featuredImage,
                     'author' => $blog->owner->name,
                     'title' => utf8_encode($translated->title),
-                    'summary' => utf8_encode('... '.$summary.' ...'),
+                    'summary' => utf8_encode($summary),
                     'read_time' => $translated->read_time,
                     'created_at' => $translated->created_at,
                     'published' => $blog->published == 0 ? false: true,
