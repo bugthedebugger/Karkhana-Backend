@@ -123,6 +123,10 @@ class BlogsController extends Controller
                 'author' => $blog->owner->name,
                 'title' => $translated->title,
                 'body' => $translated->body,
+                'language' => [
+                    'name' => $translated->language->name,
+                    'code' => $translated->language->language,
+                ],
                 'tags' => $tags,
                 'read_time' => $translated->read_time . ' min',
                 'created_at' => $translated->created_at,

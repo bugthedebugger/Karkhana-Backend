@@ -23,6 +23,10 @@ class BlogTranslation extends Model
         'read_time',
     ];
 
+    public function language() {
+        return $this->belongsTo('App\Model\Language', 'language_id', 'id');
+    }
+
     public function blog() {
         return $this->belongsTo('App\Model\Blog', 'uuid', 'uuid');
     }
