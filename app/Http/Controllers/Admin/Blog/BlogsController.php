@@ -51,10 +51,12 @@ class BlogsController extends BaseBlogsController
             
             if ($blog) {
                 if($request->featured) {
-                    $blog->update([
-                        'author' => $user->id, 
-                        'featured' => $request->featured,
-                    ]);
+                    if($request->featured != 'null') {
+                        $blog->update([
+                            'author' => $user->id, 
+                            'featured' => $request->featured,
+                        ]);
+                    }
                 }
             } else {
                 $blog = Blog::create([
