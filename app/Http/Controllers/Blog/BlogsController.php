@@ -46,7 +46,7 @@ class BlogsController extends Controller
                 continue;
             foreach($translations as $translated) {
                 if(Storage::disk('s3')->exists($blog->featured))
-                    $featuredImage = Storage::disk('s3')->temporaryURL($blog->featured, \Carbon\Carbon::now()->addMinutes(15));
+                    $featuredImage = Storage::disk('s3')->url($blog->featured);
                 else 
                     $featuredImage = null;
 
@@ -110,7 +110,7 @@ class BlogsController extends Controller
             }
 
             if(Storage::disk('s3')->exists($blog->featured))
-                $featuredImage = Storage::disk('s3')->temporaryURL($blog->featured, \Carbon\Carbon::now()->addMinutes(15));
+                $featuredImage = Storage::disk('s3')->url($blog->featured);
             else 
                 $featuredImage = null;
 

@@ -16,7 +16,7 @@ class GalleryController extends Controller
         foreach($gallery as $galleryImage) {
             $imageList[] = [
                 'path' => $galleryImage->path,
-                'url' => Storage::disk('s3')->temporaryURL($galleryImage->path, \Carbon\Carbon::now()->addMinutes(15)),
+                'url' => Storage::disk('s3')->url($galleryImage->path),
             ];
         }
 
