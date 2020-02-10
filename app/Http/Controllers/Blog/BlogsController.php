@@ -52,7 +52,7 @@ class BlogsController extends Controller
 
                 $summary = substr(strip_tags($translated->body), 10, 150);
 
-                $blogList[] = base64_encode([
+                $blogList[] = base64_encode(json_encode([
                     'uuid' => $translated->uuid,
                     'featured' => $featuredImage,
                     'author' => $blog->owner->name,
@@ -61,7 +61,7 @@ class BlogsController extends Controller
                     'read_time' => $translated->read_time,
                     'created_at' => $translated->created_at,
                     'published' => $blog->published == 0 ? false: true,
-                ]);
+                ]));
             }
         }
 
