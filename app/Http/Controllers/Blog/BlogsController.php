@@ -50,11 +50,14 @@ class BlogsController extends Controller
                 else 
                     $featuredImage = null;
 
+                $summary = substr(strip_tags($translated->body), 10, 150);
+
                 $blogList[] = [
                     'uuid' => $translated->uuid,
                     'featured' => $featuredImage,
                     'author' => $blog->owner->name,
                     'title' => $translated->title,
+                    'summary' => '... '.$summary.' ...',
                     'read_time' => $translated->read_time,
                     'created_at' => $translated->created_at,
                     'published' => $blog->published == 0 ? false: true,
