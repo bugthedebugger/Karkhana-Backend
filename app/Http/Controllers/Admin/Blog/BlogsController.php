@@ -50,10 +50,14 @@ class BlogsController extends BaseBlogsController
             $blog = Blog::where('uuid', $uuid)->first();
             
             if ($blog) {
-                $blog->update([
-                    'author' => $user->id, 
-                    'featured' => $request->featured,
-                ]);
+                if($request->featured) {
+                    if($request->featured != 'null') {
+                        $blog->update([
+                            'author' => $user->id, 
+                            'featured' => $request->featured,
+                        ]);
+                    }
+                }
             } else {
                 $blog = Blog::create([
                     'uuid' => $uuid,
