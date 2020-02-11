@@ -2,17 +2,17 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Auth\Authenticatable;
-use Laravel\Lumen\Auth\Authorizable;
-use Illuminate\Database\Eloquent\Model;
 use App\Model\Role;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Lumen\Auth\Authorizable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use HasApiTokens,Authenticatable, Authorizable;
+    use HasApiTokens, Authenticatable, Authorizable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +32,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    public function roles(){
+    public function roles()
+    {
         return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id');
+    }
+
+    public function isAdmin(){
+        return $this->roles()->where('name', 'SuperAdmin')->first();
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = $value;
     }
 }

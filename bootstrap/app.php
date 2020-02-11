@@ -66,6 +66,7 @@ $app->configure('envKeys');
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'admin' => App\Http\Middleware\AdminMiddleware::class,
 ]);
 
 /*
@@ -116,5 +117,12 @@ $app->routeMiddleware([
 $app->middleware([
     App\Http\Middleware\CorsMiddleware::class
 ]);
+
+$app->register(Illuminate\Mail\MailServiceProvider::class);
+
+$app->configure('mail');
+$app->alias('mailer', Illuminate\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
 return $app;

@@ -30,7 +30,7 @@ class LoginController extends Controller
         if (Hash::check($request->password, $user->password))
         {
             $passport = $user->createToken(config('envKeys.token.ApiToken'));
-            // dd($passport->access_token);
+
             return [
                 'email'       => $user->email,
                 'token'       => $passport->accessToken,

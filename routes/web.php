@@ -33,3 +33,15 @@ $router->get('/languages', [
     'as' => 'lanugages',
     'uses' => 'LanguageController@index',
 ]);
+
+$router->get('v1/user', [
+    	'as' => 'user', 'uses' => 'Users\UserController@index', 'middleware' => ['auth']
+]);
+
+$router->get('v1/register', [
+    	'as' => 'register', 'uses' => 'Register\RegisterController@index', 'middleware' => ['auth', 'admin']
+]);
+
+$router->get('v1/register/verify/{token}', [
+    	'as' => 'register.verify', 'uses' => 'Register\RegisterController@verify'
+]);

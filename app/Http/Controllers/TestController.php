@@ -20,12 +20,12 @@ class TestController extends Controller
 
     public function test(){
 
-        // Storage::url('public/image');
+        Storage::disk('s3')->put('pages/image/test.txt', 'tests');
+        return Storage::disk('s3')->url('pages/image/test.txt');
         // return Storage::files('public/images');
-        asset('public/images/Image112.png');
+        // asset('public/images/Image112.png');
 
-        if(Storage::disk('local')->exists('public/images/Image112.png')){
-            // return 'true';
+        if(Storage::disk('s3')->exists('pages/images/Image112.png')){
             return Storage::disk('local')->url('public/images/Image112.png');
         }
 
