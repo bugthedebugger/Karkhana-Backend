@@ -19,6 +19,10 @@ $router->post('v1/login/email', [
     'as' => 'login.email', 'uses' => 'Login\LoginController@login'
 ]);
 
+$router->get('v1/test', [
+    'as' => 'test', 'uses' => 'TestController@test'
+]);
+
 $router->group(['prefix' => 'v1/pages'], function () use ($router) {
     $router->get('/{page}', [
     	'as' => 'pages', 'uses' => 'Pages\PageController@index'

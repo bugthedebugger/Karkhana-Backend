@@ -60,6 +60,13 @@ class SectionSeeder extends Seeder
         	'section_id' => $sectionCover->id
         ]);
 
+        $resourcesCover = $translation->resources()->create([
+            'resource_type' => 'image',
+            'identifier' => 'slider',
+            'path'  => 'path',
+            'order' => 0
+        ]); 
+
         $sectionAboutTrans = SectionTranslation::create([
         	'title' => 'About',
         	'data' => $jsonAbout,

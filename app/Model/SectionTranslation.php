@@ -21,4 +21,8 @@ class SectionTranslation extends Model
 	public function section(){
 		return $this->belongsTo(Section::class, 'section_id');
 	}
+
+	public function resources(){
+		return $this->morphMany(Resource::class, 'resourceable');
+	}
 }

@@ -10,10 +10,14 @@
         "doctrine/dbal": "^2.10",
         "dusterio/lumen-passport": "^0.2.15",
         "laravel/lumen-framework": "^6.0",
+
+        "league/flysystem": "^1.0",
+
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/flysystem-cached-adapter": "~1.0",
         "league/flysystem-sftp": "~1.0",
         "ramsey/uuid": "^3.9"
+
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

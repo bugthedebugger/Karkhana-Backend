@@ -7,6 +7,7 @@
 namespace App\Model;
 
 use App\Model\Page;
+use App\Model\Resource;
 use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
@@ -21,5 +22,9 @@ class Section extends Model
 
 	public function translations(){
 		return $this->hasMany(SectionTranslation::class, 'section_id');
+	}
+
+	public function resources(){
+		return $this->morphMany(Resource::class, 'resourceable');
 	}
 }
