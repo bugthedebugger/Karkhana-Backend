@@ -75,17 +75,16 @@ class BlogsController extends BaseBlogsController
                     }
                 }
             } else {
-                if ($blog->slug != $slug) {
-                    $slugCount = Blog::where([
-                        ['slug', 'like', $slug],
-                    ])->get()->count();
+                
+                $slugCount = Blog::where([
+                    ['slug', 'like', $slug],
+                ])->get()->count();
 
-                    if ($slugCount > 0) {
-                        return response()->json([
-                            'message' => 'Slug already in use.',
-                            'status' => 'error',
-                        ], 500);
-                    }
+                if ($slugCount > 0) {
+                    return response()->json([
+                        'message' => 'Slug already in use.',
+                        'status' => 'error',
+                    ], 500);
                 }
 
                 $blog = Blog::create([
