@@ -54,6 +54,7 @@ class BlogsController extends Controller
 
                 $blogList[] = [
                     'uuid' => $translated->uuid,
+                    'slug' => $blog->slug,
                     'featured' => $featuredImage,
                     'author' => $blog->owner->name,
                     'title' => utf8_encode($translated->title),
@@ -94,11 +95,20 @@ class BlogsController extends Controller
 
         if($this->showUnpublished) {
             $blog = Blog::where('uuid', $uuid)->first();
+            if (is_null($blog)) {
+                $blog = Blog::where('slug', 'like', $uuid)->first();
+            }
         } else {
             $blog = Blog::where([
                 ['uuid', '=', $uuid],
                 ['published', '=', true],
             ])->first();
+            if (is_null($blog)) {
+                $blog = Blog::where([
+                    ['slug', 'like', $uuid],
+                    ['published', '=', true],
+                ])->first();
+            }
         }
 
         if($blog) {
@@ -121,6 +131,7 @@ class BlogsController extends Controller
 
             $foundBlog = [
                 'uuid' => $translated->uuid,
+                'slug' => $blog->slug,
                 'featured' => $featuredImage,
                 'author' => $blog->owner->name,
                 'title' => $translated->title,

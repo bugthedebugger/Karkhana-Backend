@@ -39,7 +39,8 @@ class BlogsController extends BaseBlogsController
             'title' => 'required',
             'language' => 'required',
         ]);
-        
+
+        $slug = Str::slug($request->slug);        
         $uuid = $request->uuid;
         $user = Auth::user();
         $tags = $request->tags;
@@ -50,17 +51,46 @@ class BlogsController extends BaseBlogsController
             $blog = Blog::where('uuid', $uuid)->first();
             
             if ($blog) {
+                if ($blog->slug != $slug) {
+                    $slugCount = Blog::where([
+                        ['slug', 'like', $slug],
+                        ['uuid', '!=', $uuid]
+                    ])->get()->count();
+
+                    if ($slugCount > 0) {
+                        return response()->json([
+                            'message' => 'Slug already in use.',
+                            'status' => 'error',
+                        ], 500);
+                    }
+                }
+
                 if($request->featured) {
                     if($request->featured != 'null') {
                         $blog->update([
                             'author' => $user->id, 
+                            'slug' => $slug,
                             'featured' => $request->featured,
                         ]);
                     }
                 }
             } else {
+                if ($blog->slug != $slug) {
+                    $slugCount = Blog::where([
+                        ['slug', 'like', $slug],
+                    ])->get()->count();
+
+                    if ($slugCount > 0) {
+                        return response()->json([
+                            'message' => 'Slug already in use.',
+                            'status' => 'error',
+                        ], 500);
+                    }
+                }
+
                 $blog = Blog::create([
                     'uuid' => $uuid,
+                    'slug' => $slug,
                     'author' => $user->id,
                     'featured' => $request->featured,
                 ]);
@@ -91,14 +121,15 @@ class BlogsController extends BaseBlogsController
             return response()->json([
                 'message' => $e->getMessage(),
                 'status' => 'error',
-            ]);
+            ], 500);
         }
 
         return response()->json([
             'message' => 'Blog created/updated successfully!',
             'status' => 'success',
             'data' => [
-                'uuid'=> $uuid,
+                'uuid' => $uuid,
+                'slug' => $slug,
             ],
         ]);
     }

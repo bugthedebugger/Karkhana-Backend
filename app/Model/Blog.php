@@ -16,6 +16,7 @@ class Blog extends Model
         'uuid',
         'author',
         'published',
+        'slug',
     ];
 
     public function translations() {
