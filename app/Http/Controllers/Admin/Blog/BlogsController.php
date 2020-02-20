@@ -72,6 +72,7 @@ class BlogsController extends BaseBlogsController
                             'slug' => $slug,
                             'featured' => $request->featured,
                         ]);
+                        $bog->save();
                     }
                 }
             } else {
