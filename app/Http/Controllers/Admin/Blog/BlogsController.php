@@ -65,16 +65,14 @@ class BlogsController extends BaseBlogsController
                     }
                 }
 
+                $blog->author = $user->id;
+                $blog->slug = $slug;
                 if($request->featured) {
                     if($request->featured != 'null') {
-                        $blog->update([
-                            'author' => $user->id, 
-                            'slug' => $slug,
-                            'featured' => $request->featured,
-                        ]);
-                        $bog->save();
+                        $blog->featured = $request->featured;
                     }
-                }
+                } 
+                $blog->save();
             } else {
                 
                 $slugCount = Blog::where([
