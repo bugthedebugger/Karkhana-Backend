@@ -43,8 +43,10 @@ class BlogsController extends BaseBlogsController
         $slug = Str::slug($request->slug);    
         $searchForSlug = true;
         
-        if (is_null($slug) || $slug == '' || $slug == null || $slug == 'null') 
+        if (is_null($slug) || $slug == '' || $slug == null || $slug == 'null') {
             $searchForSlug = false;
+            $slug = null;
+        }
         
         $uuid = $request->uuid;
         $user = Auth::user();
@@ -71,7 +73,8 @@ class BlogsController extends BaseBlogsController
                 }
 
                 $blog->author = $user->id;
-                $blog->slug = $slug;
+                if ($searchForSlug)
+                    $blog->slug = $slug;
                 if($request->featured) {
                     if($request->featured != 'null') {
                         $blog->featured = $request->featured;
@@ -132,7 +135,7 @@ class BlogsController extends BaseBlogsController
             'status' => 'success',
             'data' => [
                 'uuid' => $uuid,
-                'slug' => $slug,
+                'slug' => $blog->slug,
             ],
         ]);
     }
