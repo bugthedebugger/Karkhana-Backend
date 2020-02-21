@@ -40,7 +40,12 @@ class BlogsController extends BaseBlogsController
             'language' => 'required',
         ]);
 
-        $slug = Str::slug($request->slug);        
+        $slug = Str::slug($request->slug);    
+        $searchForSlug = true;
+        
+        if (is_null($slug) || $slug == '' || $slug == null || $slug == 'null') 
+            $searchForSlug = false;
+        
         $uuid = $request->uuid;
         $user = Auth::user();
         $tags = $request->tags;
@@ -51,7 +56,7 @@ class BlogsController extends BaseBlogsController
             $blog = Blog::where('uuid', $uuid)->first();
             
             if ($blog) {
-                if ($blog->slug != $slug) {
+                if ($blog->slug != $slug && $searchForSlug) {
                     $slugCount = Blog::where([
                         ['slug', 'like', $slug],
                         ['uuid', '!=', $uuid]
@@ -79,7 +84,7 @@ class BlogsController extends BaseBlogsController
                     ['slug', 'like', $slug],
                 ])->get()->count();
 
-                if ($slugCount > 0) {
+                if ($slugCount > 0 && $searchForSlug) {
                     return response()->json([
                         'message' => 'Slug already in use.',
                         'status' => 'error',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Blog;
 use Illuminate\Http\Request;
 use App\Model\Gallery;
+use App\Model\Blog;
 use App\Http\Controllers\Blog\GalleryController as BaseGalleryController;
 use Storage;
 
@@ -23,6 +24,15 @@ class GalleryController extends BaseGalleryController
             'photos' => 'required|array',
             'photos.*' => 'mimes:jpeg,jpg,png,gif,svg',
         ]);
+
+        $blog = Blog::where('uuid', $uuid)->first();
+
+        if (is_null($blog)) {
+            return response()->json([
+                'message' => 'File(s) upload failed! The blog has not been saved yet!',
+                'status' => 'error',
+            ], 500);
+        }
 
         $filePath = 'images/gallery/'.$uuid;
 
