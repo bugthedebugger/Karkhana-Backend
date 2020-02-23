@@ -83,6 +83,10 @@ class BlogsController extends BaseBlogsController
                 $blog->save();
             } else {
                 if ($searchForSlug) {
+                    $slugCount = Blog::where([
+                        ['slug', 'like', $slug],
+                    ])->get()->count();
+
                     if ($slugCount > 0) {
                         return response()->json([
                             'message' => 'Slug already in use.',
