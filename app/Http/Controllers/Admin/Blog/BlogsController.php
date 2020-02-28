@@ -8,6 +8,7 @@ use App\Model\Language;
 use Illuminate\Http\Request;
 use Auth;
 use App\Http\Controllers\Blog\BlogsController as BaseBlogsController;
+use App\User;
 
 class BlogsController extends BaseBlogsController
 {
@@ -79,7 +80,8 @@ class BlogsController extends BaseBlogsController
                     }
                 }
 
-                $blog->author = $user->id;
+                if ($author)
+                    $blog->author = $user->id;
                 if ($searchForSlug)
                     $blog->slug = $slug;
                 if($request->featured) {
