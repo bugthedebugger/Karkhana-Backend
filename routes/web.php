@@ -33,3 +33,15 @@ $router->get('/languages', [
     'as' => 'lanugages',
     'uses' => 'LanguageController@index',
 ]);
+
+$router->get('roles', [
+    'middleware' => ['auth'],
+    'as' => 'roles.list',
+    'uses' => 'Roles\RolesController@listRoles',
+]);
+
+$router->get('roles/auth', [
+    'middleware' => ['auth'],
+    'as' => 'roles.list',
+    'uses' => 'Roles\RolesController@getUserRoles',
+]);

@@ -24,7 +24,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-        	return response()->json(['error' => 'Credentials Not Matched', 'code' => 401], 401);
+            return response()->json(['error' => 'Credentials Not Matched', 'code' => 401], 401);
         }
 
         if (Hash::check($request->password, $user->password))

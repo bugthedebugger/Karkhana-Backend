@@ -72,7 +72,6 @@ class BlogsController extends BaseBlogsController
                     }
                 }
 
-                $blog->author = $user->id;
                 if ($searchForSlug)
                     $blog->slug = $slug;
                 if($request->featured) {

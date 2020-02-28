@@ -54,7 +54,7 @@ class GalleryController extends BaseGalleryController
             return response()->json([
                 'message' => $e->getMessage(),
                 'status' => 'error',
-            ], 500);;
+            ], 500);
         }
 
         return response()->json([

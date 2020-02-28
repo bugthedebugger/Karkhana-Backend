@@ -16,7 +16,7 @@ class CreateRegistrationsTokenTable extends Migration
         Schema::create('registrations_token', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->index();
-            $table->text('token')->index()->unique();
+            $table->string('token')->index()->unique();
             $table->boolean('registered')->default(false);
             $table->timestamps();
 

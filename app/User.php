@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Model\Role;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use App\Model\Registration;
+use App\Model\UserInfo;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use HasApiTokens,Authenticatable, Authorizable;
+    use HasApiTokens, Authenticatable, Authorizable;
 
     /**
      * The attributes that are mass assignable.
@@ -34,5 +36,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function roles(){
         return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id');
+    }
+
+    public function registration() {
+        return $this->hasOne(Registration::class);
+    }
+
+    public function info() {
+        return $this->hasOne(UserInfo::class);
     }
 }
