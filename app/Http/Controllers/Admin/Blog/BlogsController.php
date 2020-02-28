@@ -49,7 +49,14 @@ class BlogsController extends BaseBlogsController
         }
         
         $uuid = $request->uuid;
-        $user = Auth::user();
+        $author = $request->author;
+        if ($author) {
+            if ($author != 'null') {
+                $user = User::find($author);
+            }
+        } else {
+            $user = Auth::user();
+        }
         $tags = $request->tags;
         $language = Language::where('language', $request->language)->first();
 
@@ -72,6 +79,7 @@ class BlogsController extends BaseBlogsController
                     }
                 }
 
+                $blog->author = $user->id;
                 if ($searchForSlug)
                     $blog->slug = $slug;
                 if($request->featured) {

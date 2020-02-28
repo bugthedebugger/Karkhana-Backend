@@ -52,11 +52,29 @@ class BlogsController extends Controller
 
                 $summary = substr(strip_tags($translated->body), 10, 150);
 
+                if ($blog->owner->id != 1) {
+                    $author = [
+                        'name' => $blog->owner->name,
+                        'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
+                        'bio' => $blog->owner->info->bio,
+                        'facebook' => $blog->owner->info->facebook,
+                        'linkedin' => $blog->owner->info->linkedin,
+                        'twitter' => $blog->owner->info->twitter,
+                        'youtube' => $blog->owner->info->youtube,
+                        'instagram' => $blog->owner->info->instagram,
+                    ];
+                } else {
+                    $author = [
+                        'name' => $blog->owner->name,
+                        'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                    ];
+                }
+
                 $blogList[] = [
                     'uuid' => $translated->uuid,
                     'slug' => $blog->slug,
                     'featured' => $featuredImage,
-                    'author' => $blog->owner->name,
+                    'author' => $author,
                     'title' => utf8_encode($translated->title),
                     'summary' => utf8_encode($summary),
                     'read_time' => $translated->read_time,
@@ -115,6 +133,24 @@ class BlogsController extends Controller
             $translated = $blog->translations()->first();
             $unFilteredTags = $blog->tags;
             $tags = null;
+
+            if ($blog->owner->id != 1) {
+                $author = [
+                    'name' => $blog->owner->name,
+                    'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
+                    'bio' => $blog->owner->info->bio,
+                    'facebook' => $blog->owner->info->facebook,
+                    'linkedin' => $blog->owner->info->linkedin,
+                    'twitter' => $blog->owner->info->twitter,
+                    'youtube' => $blog->owner->info->youtube,
+                    'instagram' => $blog->owner->info->instagram,
+                ];
+            } else {
+                $author = [
+                    'name' => $blog->owner->name,
+                    'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                ];
+            }
             
             foreach($unFilteredTags as $tag) {
                 $translatedTag = $tag->translations()->first();
@@ -133,7 +169,7 @@ class BlogsController extends Controller
                 'uuid' => $translated->uuid,
                 'slug' => $blog->slug,
                 'featured' => $featuredImage,
-                'author' => $blog->owner->name,
+                'author' => $author,
                 'title' => $translated->title,
                 'body' => $translated->body,
                 'language' => [
