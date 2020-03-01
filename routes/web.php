@@ -34,14 +34,20 @@ $router->get('/languages', [
     'uses' => 'LanguageController@index',
 ]);
 
-$router->get('roles', [
+$router->get('/roles', [
     'middleware' => ['auth'],
     'as' => 'roles.list',
     'uses' => 'Roles\RolesController@listRoles',
 ]);
 
-$router->get('roles/auth', [
+$router->get('/roles/auth', [
     'middleware' => ['auth'],
     'as' => 'roles.list',
     'uses' => 'Roles\RolesController@getUserRoles',
+]);
+
+$router->get('/me', [
+    'middleware' => ['auth'],
+    'as' => 'user.info',
+    'uses' => 'Profile\ProfilesController@me',
 ]);

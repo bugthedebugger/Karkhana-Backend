@@ -54,6 +54,7 @@ class BlogsController extends Controller
 
                 if ($blog->owner->id != 1) {
                     $author = [
+                        'id' => $blog->owner->id,
                         'name' => $blog->owner->name,
                         'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
                         'bio' => $blog->owner->info->bio,
@@ -65,6 +66,7 @@ class BlogsController extends Controller
                     ];
                 } else {
                     $author = [
+                        'id' => $blog->owner->id,
                         'name' => $blog->owner->name,
                         'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                     ];
@@ -136,6 +138,7 @@ class BlogsController extends Controller
 
             if ($blog->owner->id != 1) {
                 $author = [
+                    'id' => $blog->owner->id,
                     'name' => $blog->owner->name,
                     'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
                     'bio' => $blog->owner->info->bio,
@@ -147,6 +150,7 @@ class BlogsController extends Controller
                 ];
             } else {
                 $author = [
+                    'id' => $blog->owner->id,
                     'name' => $blog->owner->name,
                     'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                 ];
