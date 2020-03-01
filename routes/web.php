@@ -51,3 +51,9 @@ $router->post('/me', [
     'as' => 'user.info',
     'uses' => 'Profile\ProfilesController@me',
 ]);
+
+$router->post('/profile/edit', [
+    'middleware' => ['auth'],
+    'as' => 'profile.edit',
+    'uses' => 'Profile\ProfilesController@edit',
+]);
