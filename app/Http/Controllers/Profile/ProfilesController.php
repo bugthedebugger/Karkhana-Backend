@@ -40,11 +40,26 @@ class ProfilesController extends Controller
             'roles' => $userRoles,
         ];
 
+        if ($user->id != 1) {
+            $author = [
+                'bio' => $user->info->bio,
+                'facebook' => $user->info->facebook,
+                'linkedin' => $user->info->linkedin,
+                'twitter' => $user->info->twitter,
+                'youtube' => $user->info->youtube,
+                'instagram' => $user->info->instagram,
+            ];
+        } else {
+            $author = null;
+        }
+
         if ($user->id == 1) {
             $userInfo['avatar'] = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
         } else {
             $userInfo['avatar'] = $user->info->avatar;
         }
+
+        $userInfo['info'] = $author;
 
         return CommonResponses::success('success', true, $userInfo);
     }
