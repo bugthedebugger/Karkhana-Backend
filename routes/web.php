@@ -46,7 +46,7 @@ $router->get('/roles/auth', [
     'uses' => 'Roles\RolesController@getUserRoles',
 ]);
 
-$router->get('/me', [
+$router->post('/me', [
     'middleware' => ['auth'],
     'as' => 'user.info',
     'uses' => 'Profile\ProfilesController@me',
