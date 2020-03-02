@@ -7,6 +7,7 @@ use App\Common\CommonResponses;
 use Auth;
 use App\User;
 use Illuminate\Http\Request;
+use Storage;
 
 class ProfilesController extends Controller
 {
@@ -56,7 +57,9 @@ class ProfilesController extends Controller
         if ($user->id == 1) {
             $userInfo['avatar'] = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
         } else {
-            $userInfo['avatar'] = $user->info->avatar;
+            $parsedAvatar = Storage::disk('s3')->url($user->info->avatar);
+            $userInfo['avatar'] = $parsedAvatar;
+            $userInfo['avatar_path'] = $user->info->avatar;
         }
 
         $userInfo['info'] = $author;
@@ -68,7 +71,7 @@ class ProfilesController extends Controller
         $this->validate($request, [
             'password' => 'nullable|min:6',
             'bio' => 'required|min:6',
-            'avatar' => 'required|mimes:jpeg,jpg,png,gif,svg',
+            'avatar' => 'nullable|mimes:jpeg,jpg,png,gif,svg',
             'linkedin' => 'nullable|string',
             'facebook' => 'nullable|string',
             'twitter' => 'nullable|string',
@@ -83,7 +86,11 @@ class ProfilesController extends Controller
 
         \DB::beginTransaction();
         try {
-            $saved = $avatar->store($filePath, 's3');
+            if($request->has('avatar')) {
+                $saved = $avatar->store($filePath, 's3');
+            } else {
+                $saved = $user->info->avatar;
+            }
 
             $user->name = $request->name;
             if($request->password != null || !is_null($request->password) || $request->password !== 'null')
