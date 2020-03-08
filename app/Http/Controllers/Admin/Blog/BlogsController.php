@@ -43,6 +43,7 @@ class BlogsController extends BaseBlogsController
 
         $slug = Str::slug($request->slug);    
         $searchForSlug = true;
+        $hasGuest = $request->has('guest');
         
         if (is_null($slug) || $slug == '' || $slug == null || $slug == 'null') {
             $searchForSlug = false;
@@ -50,13 +51,17 @@ class BlogsController extends BaseBlogsController
         }
         
         $uuid = $request->uuid;
-        $author = $request->author;
-        if ($author) {
-            if ($author != 'null') {
-                $user = User::find($author);
-            }
+        if ($hasGuest) {
+            $author = null;
         } else {
-            $user = Auth::user();
+            $author = $request->author;
+            if ($author) {
+                if ($author != 'null') {
+                    $user = User::find($author);
+                }
+            } else {
+                $user = Auth::user();
+            }
         }
         $tags = $request->tags;
         $language = Language::where('language', $request->language)->first();
@@ -80,8 +85,17 @@ class BlogsController extends BaseBlogsController
                     }
                 }
 
-                if ($author)
-                    $blog->author = $user->id;
+                if ($hasGuest) {
+                    $blog->author = null;
+                    $blog->has_guest_author = true;
+                    $blog->guest_id = $request->guest;
+                } else {
+                    if ($author) {
+                        $blog->author = $user->id;
+                        $blog->has_guest_author = false;
+                        $blog->guest_id = null;
+                    }
+                }
                 if ($searchForSlug)
                     $blog->slug = $slug;
                 if($request->featured) {
@@ -107,8 +121,10 @@ class BlogsController extends BaseBlogsController
                 $blog = Blog::create([
                     'uuid' => $uuid,
                     'slug' => $slug,
-                    'author' => $user->id,
+                    'author' => $hasGuest ? null : $user->id,
                     'featured' => $request->featured,
+                    'has_guest_author' => $hasGuest,
+                    'guest_id' => $hasGuest ? $request->guest : null,
                 ]);
             }
 

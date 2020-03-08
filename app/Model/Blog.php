@@ -21,6 +21,7 @@ class Blog extends Model
         'published',
         'slug',
         'has_guest_author',
+        'guest_id',
     ];
     
 
@@ -41,7 +42,7 @@ class Blog extends Model
     }
 
     public function hasGuest() {
-        return $this->has_guest_author;
+        return $this->has_guest_author == 1? true: false;
     }
 
     public function guest() {

@@ -36,6 +36,7 @@ class GuestAuthor extends Model
             $avatar = Storage::disk('s3')->url($this->avatar);
 
         $data = [
+            'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'bio' => $this->bio, 

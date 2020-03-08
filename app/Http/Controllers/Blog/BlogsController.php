@@ -52,7 +52,9 @@ class BlogsController extends Controller
 
                 $summary = substr(strip_tags($translated->body), 10, 150);
 
-                if($blog->owner) {
+                if ($blog->hasGuest()) {
+                    $author = $blog->guest->info();
+                } else {
                     if ($blog->owner->id != 1) {
                         $author = [
                             'id' => $blog->owner->id,
@@ -72,8 +74,6 @@ class BlogsController extends Controller
                             'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                         ];
                     }
-                } else {
-                    
                 }
 
                 $blogList[] = [
@@ -86,6 +86,7 @@ class BlogsController extends Controller
                     'read_time' => $translated->read_time,
                     'created_at' => $translated->created_at,
                     'published' => $blog->published == 0 ? false: true,
+                    'guest' => $blog->hasGuest(),
                 ];
             }
         }
@@ -140,26 +141,29 @@ class BlogsController extends Controller
             $unFilteredTags = $blog->tags;
             $tags = null;
 
-            if ($blog->owner->id != 1) {
-                $author = [
-                    'id' => $blog->owner->id,
-                    'name' => $blog->owner->name,
-                    'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
-                    'bio' => $blog->owner->info->bio,
-                    'facebook' => $blog->owner->info->facebook,
-                    'linkedin' => $blog->owner->info->linkedin,
-                    'twitter' => $blog->owner->info->twitter,
-                    'youtube' => $blog->owner->info->youtube,
-                    'instagram' => $blog->owner->info->instagram,
-                ];
+            if ($blog->hasGuest()) {
+                $author = $blog->guest->info();
             } else {
-                $author = [
-                    'id' => $blog->owner->id,
-                    'name' => $blog->owner->name,
-                    'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-                ];
+                if ($blog->owner->id != 1) {
+                    $author = [
+                        'id' => $blog->owner->id,
+                        'name' => $blog->owner->name,
+                        'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
+                        'bio' => $blog->owner->info->bio,
+                        'facebook' => $blog->owner->info->facebook,
+                        'linkedin' => $blog->owner->info->linkedin,
+                        'twitter' => $blog->owner->info->twitter,
+                        'youtube' => $blog->owner->info->youtube,
+                        'instagram' => $blog->owner->info->instagram,
+                    ];
+                } else {
+                    $author = [
+                        'id' => $blog->owner->id,
+                        'name' => $blog->owner->name,
+                        'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                    ];
+                }
             }
-            
             foreach($unFilteredTags as $tag) {
                 $translatedTag = $tag->translations()->first();
                 $tags[] = [
@@ -188,6 +192,7 @@ class BlogsController extends Controller
                 'read_time' => $translated->read_time . ' min',
                 'created_at' => $translated->created_at,
                 'published' => $blog->published == 0 ? false: true,
+                'guest' => $blog->hasGuest(),
             ];
             return response()->json([
                 'message' => 'Blog found',
