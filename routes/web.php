@@ -57,3 +57,8 @@ $router->post('/profile/edit', [
     'as' => 'profile.edit',
     'uses' => 'Profile\ProfilesController@edit',
 ]);
+
+$router->get('/guests', [
+    'as' => 'guest.index',
+    'uses' => 'Users\GuestAuthorsController@index',
+]);

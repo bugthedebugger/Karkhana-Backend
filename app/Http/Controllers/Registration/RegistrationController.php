@@ -86,4 +86,13 @@ class RegistrationController extends Controller
             ['registered', '=', false]
         ])->count() == 1? true: false;
     }
+
+    public function registerGuest(Request $request) {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'name' => 'required|min:6',
+            'avatar' => 'required|mimes:jpeg,jpg,png,gif,svg',
+            'bio' => 'required|min:6'
+        ]);
+    }
 }

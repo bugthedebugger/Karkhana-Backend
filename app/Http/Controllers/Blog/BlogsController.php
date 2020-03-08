@@ -52,24 +52,28 @@ class BlogsController extends Controller
 
                 $summary = substr(strip_tags($translated->body), 10, 150);
 
-                if ($blog->owner->id != 1) {
-                    $author = [
-                        'id' => $blog->owner->id,
-                        'name' => $blog->owner->name,
-                        'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
-                        'bio' => $blog->owner->info->bio,
-                        'facebook' => $blog->owner->info->facebook,
-                        'linkedin' => $blog->owner->info->linkedin,
-                        'twitter' => $blog->owner->info->twitter,
-                        'youtube' => $blog->owner->info->youtube,
-                        'instagram' => $blog->owner->info->instagram,
-                    ];
+                if($blog->owner) {
+                    if ($blog->owner->id != 1) {
+                        $author = [
+                            'id' => $blog->owner->id,
+                            'name' => $blog->owner->name,
+                            'avatar' => Storage::disk('s3')->url($blog->owner->info->avatar),
+                            'bio' => $blog->owner->info->bio,
+                            'facebook' => $blog->owner->info->facebook,
+                            'linkedin' => $blog->owner->info->linkedin,
+                            'twitter' => $blog->owner->info->twitter,
+                            'youtube' => $blog->owner->info->youtube,
+                            'instagram' => $blog->owner->info->instagram,
+                        ];
+                    } else {
+                        $author = [
+                            'id' => $blog->owner->id,
+                            'name' => $blog->owner->name,
+                            'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                        ];
+                    }
                 } else {
-                    $author = [
-                        'id' => $blog->owner->id,
-                        'name' => $blog->owner->name,
-                        'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-                    ];
+                    
                 }
 
                 $blogList[] = [

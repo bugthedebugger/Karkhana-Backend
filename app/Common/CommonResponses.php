@@ -16,6 +16,7 @@ class CommonResponses {
     }
 
     public static function error($message, $code=500) {
+        \Log::error($message);
         return response()->json([
             'status' => 'error',
             'message' => $message,

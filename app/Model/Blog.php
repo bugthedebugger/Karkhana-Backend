@@ -20,7 +20,9 @@ class Blog extends Model
         'author',
         'published',
         'slug',
+        'has_guest_author',
     ];
+    
 
     public function translations() {
         return $this->hasMany('App\Model\BlogTranslation', 'uuid', 'uuid');
@@ -36,5 +38,13 @@ class Blog extends Model
 
     public function tags() {
         return $this->belongsToMany('App\Model\Tag');
+    }
+
+    public function hasGuest() {
+        return $this->has_guest_author;
+    }
+
+    public function guest() {
+        return $this->belongsTo('App\Model\GuestAuthor');
     }
 }

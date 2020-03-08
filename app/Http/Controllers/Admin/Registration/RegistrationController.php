@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Model\Registration;
 use Storage;
+use App\Model\GuestAuthor;
 
 
 class RegistrationController extends Controller
@@ -114,5 +115,50 @@ class RegistrationController extends Controller
         } 
 
         return CommonResponses::error('Invalid Email', 400);
+    }
+
+    public function registerGuest(Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|unique:guest_author',
+            'bio' => 'required|min:6', 
+            'avatar' => 'required|mimes:jpeg,jpg,png,gif,svg',
+            'linkedin' => 'nullable',
+            'facebook' => 'nullable',
+            'twitter' => 'nullable',
+            'youtube' => 'nullable',
+            'instagram' => 'nullable',
+        ]);
+
+        $filePath = 'images/guest';
+        $avatar = $request->avatar;
+
+        \DB::beginTransaction();
+        try {
+            $saved = $avatar->store($filePath, 's3');
+            $guest = GuestAuthor::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'bio' => $request->bio, 
+                'avatar' => $saved,
+                'linkedin' => $request->linkedin,
+                'facebook' => $request->facebook,
+                'twitter' => $request->twitter,
+                'youtube' => $request->youtube,
+                'instagram' => $request->instagram,
+            ]);
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return CommonResponses::exception($e);
+        }
+
+        $data = [
+            'name' => $guest->name,
+            'email' => $guest->email,
+            'id' => $guest->id,
+        ];
+
+        return CommonResponses::success('Guest author registered successfully.', true, $data);
     }
 }

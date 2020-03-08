@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->startSeed('LanguageSeeder');
         $this->startSeed('PageSeeder');
         $this->startSeed('RolesSeeder');
+        $this->startSeed('GuestAuthorRoleSeeder');
     }
 
     public function startSeed($seedClass) {

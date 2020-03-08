@@ -34,6 +34,11 @@ $router->group([
         'as' => 'admin.users.registered',
         'uses' => 'RegistrationController@listRegisteredUsers',
     ]);
+
+    $router->post('/guest/register', [
+        'as' => 'admin.guest.register',
+        'uses' => 'RegistrationController@registerGuest',
+    ]);
 });
 
 $router->group([
