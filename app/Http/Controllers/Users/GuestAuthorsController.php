@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use App\Model\GuestAuthor;
+use App\Common\CommonResponses;
 
 class GuestAuthorsController extends Controller
 {
@@ -20,8 +21,13 @@ class GuestAuthorsController extends Controller
      * Function to return list of guests.
      */
     public function index() {
-        $guest = GuestAuthor::orderBy('name', 'asc')->get();
+        $guests = GuestAuthor::orderBy('name', 'asc')->get();
+        $data = null;
 
-        return $guest;
+        foreach ($guests as $guest) {
+            $data[] = $guest->info();
+        }
+
+        return CommonResponses::success('success', true, $data);
     }
 }
