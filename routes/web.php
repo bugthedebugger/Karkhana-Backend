@@ -62,3 +62,8 @@ $router->get('/guests', [
     'as' => 'guest.index',
     'uses' => 'Users\GuestAuthorsController@index',
 ]);
+
+$router->post('/mail', [
+    'as' => 'mail.send',
+    'uses' => 'DropALine\DropALineMailController@send',
+]);
