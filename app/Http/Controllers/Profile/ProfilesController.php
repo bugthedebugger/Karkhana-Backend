@@ -55,7 +55,7 @@ class ProfilesController extends Controller
         }
 
         if ($user->id == 1) {
-            $userInfo['avatar'] = 'https://karkhana-website-bucket.s3-ap-southeast-1.amazonaws.com/karkhanahead.png';
+            $userInfo['avatar'] = 'https://karkhana-website-bucket.s3-ap-southeast-1.amazonaws.com/head.png';
         } else {
             $parsedAvatar = Storage::disk('s3')->url($user->info->avatar);
             $userInfo['avatar'] = $parsedAvatar;
