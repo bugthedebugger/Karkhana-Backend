@@ -55,7 +55,7 @@ class ProfilesController extends Controller
         }
 
         if ($user->id == 1) {
-            $userInfo['avatar'] = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
+            $userInfo['avatar'] = 'https://karkhana-website-bucket.s3-ap-southeast-1.amazonaws.com/karkhanahead.png';
         } else {
             $parsedAvatar = Storage::disk('s3')->url($user->info->avatar);
             $userInfo['avatar'] = $parsedAvatar;

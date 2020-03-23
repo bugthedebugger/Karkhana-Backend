@@ -71,7 +71,7 @@ class BlogsController extends Controller
                         $author = [
                             'id' => $blog->owner->id,
                             'name' => $blog->owner->name,
-                            'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                            'avatar' => 'https://karkhana-website-bucket.s3-ap-southeast-1.amazonaws.com/karkhanahead.png',
                         ];
                     }
                 }
@@ -160,7 +160,7 @@ class BlogsController extends Controller
                     $author = [
                         'id' => $blog->owner->id,
                         'name' => $blog->owner->name,
-                        'avatar' => 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                        'avatar' => 'https://karkhana-website-bucket.s3-ap-southeast-1.amazonaws.com/karkhanahead.png',
                     ];
                 }
             }
