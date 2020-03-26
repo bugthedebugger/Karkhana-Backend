@@ -8,6 +8,7 @@ use App\Model\Language;
 use Illuminate\Http\Request;
 use Auth;
 use Storage;
+use App\Common\CommonResponses;
 
 class BlogsController extends Controller
 {
@@ -136,7 +137,38 @@ class BlogsController extends Controller
             }
         }
 
+        if ($blog) {
+            $requestedBlog = $this->getBlogData($blog, true);
+
+            $nextBlogRaw = Blog::where('id', '>', $blog->id)->min('id');
+            $previousBlogRaw = Blog::where('id', '<', $blog->id)->max('id');
+
+            if($nextBlogRaw) {
+                $nextBlog = $this->getBlogData(Blog::find($nextBlogRaw));
+            } else {
+                $nextBlog = null;
+            }
+
+            if($previousBlogRaw) {
+                $previousBlog = $this->getBlogData(Blog::find($previousBlogRaw));
+            } else {
+                $previousBlog = null;
+            }
+
+            $requestedBlog['next'] = $nextBlog;
+            $requestedBlog['previous'] = $previousBlog;
+
+            return CommonResponses::success('success', true, $requestedBlog);
+        } else {
+            return CommonResponses::error('Could not find blog', 404);
+        }
+    }
+
+    protected function getBlogData(Blog $blog, $includeBody=false) {
         if($blog) {
+            if(!$this->showUnpublished && !$blog->published)
+                return null;
+
             $translated = $blog->translations()->first();
             $unFilteredTags = $blog->tags;
             $tags = null;
@@ -183,7 +215,6 @@ class BlogsController extends Controller
                 'featured' => $featuredImage,
                 'author' => $author,
                 'title' => $translated->title,
-                'body' => $translated->body,
                 'language' => [
                     'name' => $translated->language->name,
                     'code' => $translated->language->language,
@@ -194,16 +225,13 @@ class BlogsController extends Controller
                 'published' => $blog->published == 0 ? false: true,
                 'guest' => $blog->hasGuest(),
             ];
-            return response()->json([
-                'message' => 'Blog found',
-                'status' => 'success',
-                'data' => $foundBlog,
-            ]);
+
+            if ($includeBody)
+                $foundBlog['body'] = $translated->body;
+            return $foundBlog;
         } else {
-            return response()->json([
-                'message' => 'Could not find blog.',
-                'status' => 'error',
-            ], 404);
+            return null;
         }
     }
 }
+
