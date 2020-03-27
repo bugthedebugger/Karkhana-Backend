@@ -53,4 +53,19 @@ $router->group([
         'as' => 'registration.register',
         'uses' => 'RegistrationController@registerUser',
     ]);
+
+    $router->post('/password-reset', [
+        'as' => 'password.reset',
+        'uses' => 'PasswordResetController@resetPassword', 
+    ]);
+
+    $router->post('/password-reset/request', [
+        'as' => 'password.reset.mail',
+        'uses' => 'PasswordResetController@sendReset', 
+    ]);
+
+    $router->post('/password-reset/{token}', [
+        'as' => 'password.reset.check',
+        'uses' => 'PasswordResetController@checkValid', 
+    ]);
 });

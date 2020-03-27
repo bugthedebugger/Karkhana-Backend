@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>
-            Karkhana Blog Registration<
+            Karkhana Blog Registration
         </title>
     </head>
     <body>

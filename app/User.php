@@ -45,4 +45,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function info() {
         return $this->hasOne(UserInfo::class);
     }
+
+    public function passwordResetToken() {
+        return $this->hasOne('App\Model\PasswordResetToken');
+    }
 }
