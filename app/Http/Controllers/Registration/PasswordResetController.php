@@ -51,7 +51,6 @@ class PasswordResetController extends Controller
         if ($token) {
             $data = [
                 'token' => $token->token,
-                'email' => $token->user->email,
             ];
             return CommonResponses::success('Reset token valid!', true, $data);
         } else {
