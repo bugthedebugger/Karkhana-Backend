@@ -32,6 +32,7 @@ class PasswordResetController extends Controller
                     $token =  Str::uuid();
                     $resetToken = $user->passwordResetToken()->create([
                         'token' => $token,
+                        'valid_till' => Carbon::tomorrow(),
                     ]);
                 }
                 Mail::to($user)->send(new PasswordResetMail($resetToken->token, $request->redirect));
