@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->startSeed('PageSeeder');
         $this->startSeed('RolesSeeder');
         $this->startSeed('GuestAuthorRoleSeeder');
+        $this->startSeed('RemoveRepeatingTagsSeeder');
     }
 
     public function startSeed($seedClass) {
