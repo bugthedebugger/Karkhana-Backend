@@ -22,6 +22,7 @@ class Blog extends Model
         'slug',
         'has_guest_author',
         'guest_id',
+        'facebook_featured',
     ];
     
 

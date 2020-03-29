@@ -46,10 +46,16 @@ class BlogsController extends Controller
             if (is_null($translations))
                 continue;
             foreach($translations as $translated) {
+
                 if(Storage::disk('s3')->exists($blog->featured))
                     $featuredImage = Storage::disk('s3')->url($blog->featured);
                 else 
                     $featuredImage = null;
+
+                if(Storage::disk('s3')->exists($blog->facebook_featured))
+                    $facebook_featured = Storage::disk('s3')->url($blog->facebook_featured);
+                else 
+                    $facebook_featured = null;
 
                 $summary = substr(strip_tags($translated->body), 10, 150);
 
@@ -81,6 +87,7 @@ class BlogsController extends Controller
                     'uuid' => $translated->uuid,
                     'slug' => $blog->slug,
                     'featured' => $featuredImage,
+                    'facebook_featured' => $facebook_featured,
                     'author' => $author,
                     'title' => utf8_encode($translated->title),
                     'summary' => utf8_encode($summary),
@@ -209,10 +216,16 @@ class BlogsController extends Controller
             else 
                 $featuredImage = null;
 
+            if(Storage::disk('s3')->exists($blog->facebook_featured))
+                $facebook_featured = Storage::disk('s3')->url($blog->facebook_featured);
+            else 
+                $facebook_featured = null;
+
             $foundBlog = [
                 'uuid' => $translated->uuid,
                 'slug' => $blog->slug,
                 'featured' => $featuredImage,
+                'facebook_featured' => $facebook_featured,
                 'author' => $author,
                 'title' => $translated->title,
                 'language' => [

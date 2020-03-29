@@ -103,6 +103,11 @@ class BlogsController extends BaseBlogsController
                         $blog->featured = $request->featured;
                     }
                 } 
+                if($request->facebook_featured) {
+                    if($request->facebook_featured != 'null') {
+                        $blog->facebook_featured = $request->facebook_featured;
+                    }
+                }
                 $blog->save();
             } else {
                 if ($searchForSlug) {
@@ -125,6 +130,7 @@ class BlogsController extends BaseBlogsController
                     'featured' => $request->featured,
                     'has_guest_author' => $hasGuest,
                     'guest_id' => $hasGuest ? $request->guest : null,
+                    'facebook_featured' => $request->facebook_featured,
                 ]);
             }
 
