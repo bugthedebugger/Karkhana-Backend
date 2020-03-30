@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Storage;
 use App\Common\CommonResponses;
+use App\Model\Tag;
 
 class BlogsController extends Controller
 {
@@ -32,12 +33,32 @@ class BlogsController extends Controller
     public function index(Request $request) {
         $this->validate($request, [
             'per_page' => 'required',
+            'tag' => 'nullable',
         ]);
-
+        
+        $tag = $request->tag;
         if($this->showUnpublished) {
-            $blogs = Blog::orderBy('created_at', 'desc')->paginate($request->per_page);
+            if ($tag) {
+                $tag = Tag::find($tag);
+                if($tag) {
+                    $blogs = $tag->blogs()->orderBy('created_at', 'desc')->paginate($request->per_page);
+                } else {
+                    return CommonResponses::error('Could not find posts for the tag!', 403);
+                }
+            } else {
+                $blogs = Blog::orderBy('created_at', 'desc')->paginate($request->per_page);
+            }
         } else {
-            $blogs = Blog::where('published', '=', true)->orderBy('created_at', 'desc')->paginate($request->per_page);
+            if ($tag) {
+                $tag = Tag::find($tag);
+                if($tag) {
+                    $blogs = $tag->blogs()->where('published', '=', true)->orderBy('created_at', 'desc')->paginate($request->per_page);
+                } else {
+                    return CommonResponses::error('Could not find posts for the tag!', 403);
+                }
+            } else {
+                $blogs = Blog::where('published', '=', true)->orderBy('created_at', 'desc')->paginate($request->per_page);
+            }
         }
         $blogList = [];
         
