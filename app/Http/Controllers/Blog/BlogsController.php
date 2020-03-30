@@ -43,7 +43,7 @@ class BlogsController extends Controller
                 if($tag) {
                     $blogs = $tag->blogs()->orderBy('created_at', 'desc')->paginate($request->per_page);
                 } else {
-                    return CommonResponses::error('Could not find posts for the tag!', 403);
+                    return CommonResponses::error('Could not find posts for the tag!', 404);
                 }
             } else {
                 $blogs = Blog::orderBy('created_at', 'desc')->paginate($request->per_page);
@@ -54,7 +54,7 @@ class BlogsController extends Controller
                 if($tag) {
                     $blogs = $tag->blogs()->where('published', '=', true)->orderBy('created_at', 'desc')->paginate($request->per_page);
                 } else {
-                    return CommonResponses::error('Could not find posts for the tag!', 403);
+                    return CommonResponses::error('Could not find posts for the tag!', 404);
                 }
             } else {
                 $blogs = Blog::where('published', '=', true)->orderBy('created_at', 'desc')->paginate($request->per_page);
