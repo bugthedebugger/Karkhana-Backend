@@ -33,12 +33,14 @@ class SectionSeeder extends Seeder
 
         $language = Language::where('language', 'en')->first();
 
-        $jsonCover = ["slider"=> [
-        					"photos"=> [
-        						["path"=> "path", "order"=> 0], ["path"=> "path", "order"=> 1]
-        					]
-        				]
-        			];
+		$jsonCover = 
+		[
+			"slider" => [
+				"photos"=> [
+					["path"=> "path", "order"=> 0], ["path"=> "path", "order"=> 1]
+				]
+			]
+        ];
 
         $jsonAbout = ['title' => 'About',
         				'text' => 'text',

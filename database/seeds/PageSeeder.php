@@ -11,7 +11,7 @@ class PageSeeder extends Seeder
      */
     public function run()
     {
-         DB::table('pages')->insert([
+        DB::table('pages')->insert([
             'name' => 'Landing Page',
             'code' => 'landing',
             'description' => 'This is landing page',
