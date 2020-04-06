@@ -62,7 +62,7 @@ class SectionSeeder extends Seeder
         	'section_id' => $sectionCover->id
         ]);
 
-        $resourcesCover = $translation->resources()->create([
+        $resourcesCover =  $sectionCoverTrans->resources()->create([
             'resource_type' => 'image',
             'identifier' => 'slider',
             'path'  => 'path',

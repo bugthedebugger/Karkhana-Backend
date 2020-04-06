@@ -113,6 +113,10 @@ $app->router->group([], function ($router) {
 });
 
 $app->router->group([], function ($router) {
+    require __DIR__.'/../routes/pages.php';
+});
+
+$app->router->group([], function ($router) {
     require __DIR__.'/../routes/registration.php';
 });
 

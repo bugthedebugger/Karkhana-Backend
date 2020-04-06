@@ -16,10 +16,8 @@ class PageController extends Controller
 	use LanguageTrait;
     public function index(Request $request, $page)
     {
-    	$page = Page::where('code', $page)->first();
-
-    	$language = $this->getLanguage($request);
-
-    	$sections = $page->sections->translations()->languageOfType($language);
+		$page = Page::where('code', $page)->first();
+		$language = $this->getLanguage($request);
+		$sections = $page->sections->translations()->languageOfType($language);
     }
 }

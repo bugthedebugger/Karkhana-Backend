@@ -14,7 +14,7 @@ class Section extends Model
 {
 	protected $table = 'sections';
 
-	protected $fillable = ['code'];
+	protected $fillable = ['code', 'page_id'];
 
 	public function page(){
 		return $this->belongsTo(Page::class, 'page_id');

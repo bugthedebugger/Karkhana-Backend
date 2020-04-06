@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->startSeed('RolesSeeder');
         $this->startSeed('GuestAuthorRoleSeeder');
         $this->startSeed('RemoveRepeatingTagsSeeder');
+        $this->startSeed('PageSeeder');
+        $this->startSeed('LandingPageSeeder');
     }
 
     public function startSeed($seedClass) {
@@ -38,7 +40,7 @@ class DatabaseSeeder extends Seeder
                 echo "\033[31m" . $e->getMessage() . "\n";
             }
         } else {
-            echo ( "\033[32m" . $seedClass . ": \033[37mAlready Seeded\n");
+            echo ( "\033[37m" . $seedClass . ": \033[32mAlready Seeded\n");
         }
         
     }
