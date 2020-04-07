@@ -8,7 +8,7 @@
 */
 $router->group([
     'prefix' => 'admin/',
-    'middleware' => 'auth',
+    'middleware' => ['auth', 'admin'],
     'namespace' => 'App\Http\Controllers\Admin\Pages',
 ], function () use ($router) {
     $router->post('/pages/landing/update', [
