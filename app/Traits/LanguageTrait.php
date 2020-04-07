@@ -16,10 +16,12 @@ trait LanguageTrait{
 
     	$request_language = $request->server('HTTP_ACCEPT_LANGUAGE');
     	if (strpos($request_language, 'np') !== false) {
-    		$lang = 'nep';
+    		$lang = 'np';
     	}else if (strpos($request_language, 'en') !== false) {
     		$lang = 'en';
-    	}
+    	} else {
+			$lang = 'en';
+		}
 
     	return Language::where('language', $lang)->first();
     }

@@ -8,13 +8,13 @@ class About implements SerializerInterface{
     public $text = null;
 
     public function toJson() {
-        return [
+        return ($this->text) ? [
             'text' => $this->text,
-        ];
+        ]: null;
     }
 
     public function __construct($data) {
-        $this->text = $data['text'];
+        $this->text = $data['text'] ?? null;
     }
 
     static public function fromJson($data) {

@@ -9,10 +9,10 @@ class Button implements SerializerInterface{
     public $action = null;
 
     public function toJson() {
-        return [
+        return $this->label ? [
             'label' => $this->label,
             'action' => $this->action,
-        ];
+        ]: null;
     }
 
     public function __construct($data) {

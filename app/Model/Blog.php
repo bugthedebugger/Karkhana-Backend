@@ -8,8 +8,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Model\BaseModel;
 
-class Blog extends Model
+class Blog extends BaseModel
 {
     use SoftDeletes;
 
@@ -28,10 +29,6 @@ class Blog extends Model
 
     public function translations() {
         return $this->hasMany('App\Model\BlogTranslation', 'uuid', 'uuid');
-    }
-
-    public function translate(Language $language) {
-        return $this->translations()->where('language_id', $language->id);
     }
 
     public function owner() {

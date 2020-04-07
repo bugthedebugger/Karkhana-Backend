@@ -18,8 +18,8 @@ class LandingPage implements SerializerInterface {
     public $mobile = null;
 
     public function __construct($data) {
-        $this->sliders = ListOfSlider::fromJson($data['sliders']);
-        $this->about = About::fromJson($data['about']);
+        $this->sliders = ListOfSlider::fromJson($data['sliders'] ?? null);
+        $this->about = About::fromJson($data['about'] ?? null);
     }
 
     public function toJson() {

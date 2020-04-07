@@ -8,17 +8,14 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Model\Language;
+use App\Model\BaseModel;
 
-class Tag extends Model
+class Tag extends BaseModel
 {
 	protected $table = 'tags';
 
 	public function translations() {
 		return $this->hasMany('App\Model\TagTranslation');
-	}
-
-	public function translate(Language $language) {
-		return $this->translations()->where('language_id', $language->id);
 	}
 
 	public function blogs() {

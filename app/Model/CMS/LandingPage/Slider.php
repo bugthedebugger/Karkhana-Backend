@@ -26,11 +26,11 @@ class Slider implements SerializerInterface {
     }
 
     public function __construct($data) {
-        $this->quote = $data['quote'];
+        $this->quote = $data['quote'] ?? null;
         $this->order = $data['order'];
         $this->hidden = $data['hidden'];
         $this->path = $data['path'];
-        $this->button = Button::fromJson($data['button']);
+        $this->button = Button::fromJson($data['button'] ?? null);
     }
 
     static public function fromJson($data) {

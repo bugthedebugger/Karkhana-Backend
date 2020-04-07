@@ -11,15 +11,19 @@ class ListOfSlider implements SerializerInterface {
     public $sliders = null;
 
     public function __construct($sliders) {
-        foreach($sliders as $slider) {
-            $this->sliders[] = Slider::fromJson($slider);;
+        if($sliders) {
+            foreach($sliders as $slider) {
+                $this->sliders[] = Slider::fromJson($slider);;
+            }
         }
     }
 
     public function toJson() {
         $sliders = null;
-        foreach($this->sliders as $slider) {
-            $sliders[] = $slider->toJson();
+        if($this->sliders) {
+            foreach($this->sliders as $slider) {
+                $sliders[] = $slider->toJson();
+            }
         }
         return $sliders;
     }

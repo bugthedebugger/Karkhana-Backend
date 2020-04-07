@@ -16,3 +16,20 @@ $router->group([
         'uses' => 'LandingPageController@update',
     ]);
 });
+
+$router->group([
+    'prefix' => 'pages/',
+    'namespace' => 'App\Http\Controllers\Pages',
+], function () use ($router) { 
+
+    $router->get('/', [
+        'as' => 'pages.list',
+        'uses' => 'PageController@listPages',
+    ]);
+
+    $router->get('/{code}', [
+        'as' => 'pages.find.by.code',
+        'uses' => 'PageController@index',
+    ]);
+
+});

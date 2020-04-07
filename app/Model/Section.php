@@ -9,8 +9,9 @@ namespace App\Model;
 use App\Model\Page;
 use App\Model\Resource;
 use Illuminate\Database\Eloquent\Model;
+use App\Model\BaseModel;
 
-class Section extends Model
+class Section extends BaseModel
 {
 	protected $table = 'sections';
 
