@@ -33,7 +33,7 @@ class Slider implements SerializerInterface {
         $this->button = Button::fromJson($data['button'] ?? null);
     }
 
-    static public function fromJson($data) {
+    public static function fromJson($data) {
         return new Slider($data);
     }
 }

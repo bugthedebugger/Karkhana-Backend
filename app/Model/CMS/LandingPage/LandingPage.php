@@ -53,7 +53,7 @@ class LandingPage implements SerializerInterface {
         ];
     }
 
-    static public function fromJson($data) {
+    public static function fromJson($data) {
         return new LandingPage($data);
     }
 }

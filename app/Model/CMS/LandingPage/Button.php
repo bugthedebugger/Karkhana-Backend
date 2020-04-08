@@ -20,7 +20,7 @@ class Button implements SerializerInterface{
         $this->action = $data['action'];
     }
 
-    static public function fromJson($data) {
+    public static function fromJson($data) {
         return new Button($data);
     }
 }

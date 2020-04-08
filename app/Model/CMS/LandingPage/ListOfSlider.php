@@ -29,7 +29,7 @@ class ListOfSlider implements SerializerInterface {
     }
     
 
-    static public function fromJson($sliders) {
+    public static function fromJson($sliders) {
         return new ListOfSlider($sliders);
     }
 }
