@@ -16,6 +16,11 @@ $router->group([
         'uses' => 'LandingPageController@update',
     ]);
 
+    $router->post('/settings/update', [
+        'as' => 'admin.settings.update',
+        'uses' => 'SettingsController@createOrUpdate',
+    ]);
+
     $router->post('/pages/header/update', [
         'as' => 'admin.header.update',
         'uses' => 'HeadersController@update',
