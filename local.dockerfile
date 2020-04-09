@@ -10,6 +10,9 @@ RUN apt-get update -yqq && \
     docker-php-ext-install zip && \
     rm -rf /var/lib/apt/lists/*
 
+RUN touch /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "upload_max_filesize = 80M;" >> /usr/local/etc/php/conf.d/uploads.ini
+
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
 WORKDIR /var/www

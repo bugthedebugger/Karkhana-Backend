@@ -25,6 +25,8 @@ class LandingPageController extends Controller
             'sections.sliders.*.order' => 'required|int',
             'sections.sliders.*.hidden' => 'required|boolean',
             'sections.sliders.*.path' => 'required|string',
+            'sections.stats' => 'nullable|array',
+            'sections.stats.*.label' => 'required|string',
         ]);
         
         $language = Language::where('language', $request->language)->first();
@@ -32,7 +34,9 @@ class LandingPageController extends Controller
         if($language) {
             \DB::beginTransaction();
             try {
-                $landingPageDataModel = LandingPage::fromJson($request->sections);
+                $sections = $request->sections;
+                $sections['language'] = $request->language;
+                $landingPageDataModel = LandingPage::fromJson($sections);
 
                 $landing_section = Section::where('code','landing')->first();
                 $landing_section_by_language = $landing_section->translate($language)->first();

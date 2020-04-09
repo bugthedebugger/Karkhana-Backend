@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->startSeed('RemoveRepeatingTagsSeeder');
         $this->startSeed('PageSeeder');
         $this->startSeed('LandingPageSeeder');
+        $this->startSeed('SeedProductsAndHeader');
     }
 
     public function startSeed($seedClass) {

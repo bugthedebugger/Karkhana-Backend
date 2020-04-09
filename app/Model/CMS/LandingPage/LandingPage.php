@@ -8,8 +8,12 @@ use App\Model\Partner;
 use App\Model\CMS\LandingPage\ListOfSlider;
 use App\Model\CMS\LandingPage\About;
 use App\Common\AppUtils;
+use App\Model\CMS\Header\Header;
+use App\Model\Section;
+use App\Model\Language;
+use App\Model\CMS\PageModel;
 
-class LandingPage implements SerializerInterface {
+class LandingPage extends PageModel implements SerializerInterface {
     public $sliders = null;
     public $about = null;
     public $stats = null;
@@ -20,6 +24,9 @@ class LandingPage implements SerializerInterface {
     public function __construct($data) {
         $this->sliders = ListOfSlider::fromJson($data['sliders'] ?? null);
         $this->about = About::fromJson($data['about'] ?? null);
+        $this->stats = ListOfStats::fromJson($data['stats'] ?? null);
+
+        parent::__construct($data);
     }
 
     public function toJson() {
@@ -45,11 +52,14 @@ class LandingPage implements SerializerInterface {
         } 
 
         return [
+            'header' => $this->header ? $this->header->toJson() : null,
             'sliders' => $this->sliders ? $this->sliders->toJson(): null,
             'about' => $this->about ? $this->about->toJson(): null,
             'phone' => $this->phone,
             'mobile' => $this->mobile,
             'partners' => $this->partners,
+            'stats' => $this->stats ? $this->stats->toJson() : null,
+            'language' => $this->language,
         ];
     }
 
