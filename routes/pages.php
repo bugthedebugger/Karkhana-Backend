@@ -21,9 +21,24 @@ $router->group([
         'uses' => 'HeadersController@update',
     ]);
 
+    $router->get('/product/all', [
+        'as' => 'admin.product.all',
+        'uses' => 'ProductsController@all',
+    ]);
+
+    $router->get('/product/{id}', [
+        'as' => 'admin.product.all',
+        'uses' => 'ProductsController@findProductByID',
+    ]);
+
     $router->post('/product/create', [
         'as' => 'admin.product.create',
         'uses' => 'ProductsController@create',
+    ]);
+
+    $router->post('/product/update', [
+        'as' => 'admin.product.update',
+        'uses' => 'ProductsController@update',
     ]);
 
     $router->post('/media/upload', [
