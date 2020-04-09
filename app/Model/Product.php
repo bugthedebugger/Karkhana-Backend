@@ -20,6 +20,7 @@ class Product extends BaseModel
         'color',
         'secondary_color',
         'code',
+        'featured_image',
     ];
 
     public function translations() {

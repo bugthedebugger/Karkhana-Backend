@@ -40,6 +40,7 @@ class ProductsController extends Controller
             'features.*.logo' => 'required',
             'features.*.feature' => 'required',
             'brochure' => 'nullable',
+            'featured_image' => 'nullable',
         ]);
         
         $language = Language::where('language', $request->language)->first();
@@ -81,6 +82,7 @@ class ProductsController extends Controller
             'features.*.logo' => 'required',
             'features.*.feature' => 'required',
             'brochure' => 'nullable',
+            'featured_image' => 'nullable',
         ]);
         
         $language = Language::where('language', $request->language)->first();
@@ -155,6 +157,10 @@ class ProductsController extends Controller
                         'brochure' => [
                             'path' => $productTranslation->brochure,
                             'url' => AppUtils::pathToAWSUrl($productTranslation->brochure),
+                        ],
+                        'featured_image' => [
+                            'path' => $product->featured_image,
+                            'url' => AppUtils::pathToAWSUrl($product->featured_image),
                         ],
                     ];
                     return CommonResponses::success('success', true, $productData);

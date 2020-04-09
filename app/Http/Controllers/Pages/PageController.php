@@ -12,6 +12,7 @@ use App\Traits\LanguageTrait;
 use App\Http\Controllers\Controller;
 use App\Common\CommonResponses;
 use App\Model\CMS\LandingPage\LandingPage;
+use App\Model\CMS\Header\Header;
 
 class PageController extends Controller
 {
@@ -27,6 +28,10 @@ class PageController extends Controller
 			switch($code) {
 				case 'landing':
 					$data = LandingPage::fromJson($section->data); 
+					$response = $data->toJson();
+					break;
+				case 'header':
+					$data = Header::fromJson($section->data);
 					$response = $data->toJson();
 					break;
 				default:
