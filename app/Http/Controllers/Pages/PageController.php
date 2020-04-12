@@ -13,7 +13,11 @@ use App\Http\Controllers\Controller;
 use App\Common\CommonResponses;
 use App\Model\CMS\LandingPage\LandingPage;
 use App\Model\CMS\Header\Header;
+use App\Model\CMS\ContactUsPage\ContactUsPage;
+use App\Model\CMS\ProductsPage\ProductsPage;
+use App\Model\CMS\ProductDetailsPage\ProductDetailsPage;
 use App\Model\Language;
+use App\Model\Product;
 
 class PageController extends Controller
 {
@@ -38,12 +42,35 @@ class PageController extends Controller
 
 			switch($code) {
 				case 'landing':
-					$data = LandingPage::fromJson($section->data); 
+					$data = LandingPage::fromJson($section->data ?? null); 
 					$response = $data->toJson();
 					break;
 				case 'header':
-					$data = Header::fromJson($section->data);
+					$data = Header::fromJson($section->data ?? null);
 					$response = $data->toJson();
+					break;
+				case 'contact':
+					$data = ContactUsPage::fromJson($section->data ?? null);
+					$response = $data->toJson();
+					break;
+				case 'products':
+					$data = ProductsPage::fromJson($section->data ?? null);
+					$response = $data->toJson();
+					break;
+				case 'product-details':
+					$this->validate($request, [
+						'code' => 'required',
+					]);
+					$product = Product::where('code', $request->code)->first();
+					if($product) {
+						$sectionData = $section->data ?? null;
+						$sectionData['code'] = $product->code;
+						
+						$data = ProductDetailsPage::fromJson($sectionData);
+						$response = $data->toJson();
+					} else {
+						return CommonResponses::error('Invalid product code!', 422);
+					}
 					break;
 				default:
 					$response = null;

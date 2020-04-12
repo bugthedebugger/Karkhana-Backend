@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->startSeed('LandingPageSeeder');
         $this->startSeed('SeedProductsAndHeader');
         $this->startSeed('SettingsPageSeeder');
+        $this->startSeed('ContactUsPageSeeder');
+        $this->startSeed('ProductDetailsPageSeeder');
     }
 
     public function startSeed($seedClass) {
@@ -42,7 +44,7 @@ class DatabaseSeeder extends Seeder
                 echo "\033[31m" . $e->getMessage() . "\n";
             }
         } else {
-            echo ( "\033[37m" . $seedClass . ": \033[32mAlready Seeded\n");
+            echo ( "\033[33m" . $seedClass . ": \033[32mAlready Seeded\n");
         }
         
     }

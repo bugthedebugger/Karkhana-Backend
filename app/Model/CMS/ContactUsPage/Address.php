@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\CMS\LandingPage;
+namespace App\Model\CMS\ContactUsPage;
 
 use App\Model\CMS\SerializerInterface;
 use App\Model\Setting;

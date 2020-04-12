@@ -31,6 +31,21 @@ $router->group([
         'uses' => 'HeadersController@update',
     ]);
 
+    $router->post('/pages/contact/update', [
+        'as' => 'admin.contact.update',
+        'uses' => 'ContactUsController@update',
+    ]);
+
+    $router->post('/pages/products/update', [
+        'as' => 'admin.products.update',
+        'uses' => 'ProductsPageController@update',
+    ]);
+
+    $router->post('/pages/product-details/update', [
+        'as' => 'admin.product-details.update',
+        'uses' => 'ProductDetailsPageController@update',
+    ]);
+
     $router->get('/pages/{code}', [
         'as' => 'admin.pages.list',
         'uses' => 'LandingPageController@index',
