@@ -70,6 +70,31 @@ $router->group([
         'as' => 'admin.media.by.page',
         'uses' => 'ResourcesController@listResourceByIdentifier',
     ]);
+
+    $router->get('/partners', [
+        'as' => 'admin.partners.index',
+        'uses' => 'PartnersController@index',
+    ]);
+
+    $router->post('/partners/create', [
+        'as' => 'admin.partners.create',
+        'uses' => 'PartnersController@create',
+    ]);
+
+    $router->post('/partners/update/{id}', [
+        'as' => 'admin.partners.update',
+        'uses' => 'PartnersController@update',
+    ]);
+
+    $router->get('/partners/{id}', [
+        'as' => 'admin.partners.find',
+        'uses' => 'PartnersController@findByID',
+    ]);
+
+    $router->delete('/partners/{id}', [
+        'as' => 'admin.partners.delete',
+        'uses' => 'PartnersController@delete',
+    ]);
 });
 
 $router->group([
