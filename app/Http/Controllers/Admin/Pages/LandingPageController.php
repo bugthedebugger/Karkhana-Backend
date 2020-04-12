@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Pages;
-use App\Http\Controllers\Controller;
 use App\Traits\LanguageTrait;
 use Illuminate\Http\Request;
 use App\Common\CommonResponses;
 use App\Model\CMS\LandingPage\LandingPage;
 use App\Model\Language;
 use App\Model\Section;
+use App\Http\Controllers\Pages\PageController;
 
-
-class LandingPageController extends Controller
+class LandingPageController extends PageController
 {
     public function update(Request $request) {
         $this->validate($request, [
@@ -27,6 +26,10 @@ class LandingPageController extends Controller
             'sections.sliders.*.path' => 'required|string',
             'sections.stats' => 'nullable|array',
             'sections.stats.*.label' => 'required|string',
+            'sections.partners' => 'nullable',
+            'sections.partners.label' => 'required_with:sections.partners',
+            'sections.partners.text' => 'required_with:sections.partners',
+            'sections.partners.button_label' => 'required_with:sections.partners',
         ]);
         
         $language = Language::where('language', $request->language)->first();

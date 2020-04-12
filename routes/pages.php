@@ -11,6 +11,11 @@ $router->group([
     'middleware' => ['auth', 'admin'],
     'namespace' => 'App\Http\Controllers\Admin\Pages',
 ], function () use ($router) {
+    $router->get('/pages', [
+        'as' => 'admin.pages.list',
+        'uses' => 'LandingPageController@listPages',
+    ]);
+
     $router->post('/pages/landing/update', [
         'as' => 'admin.landing.update',
         'uses' => 'LandingPageController@update',
@@ -24,6 +29,11 @@ $router->group([
     $router->post('/pages/header/update', [
         'as' => 'admin.header.update',
         'uses' => 'HeadersController@update',
+    ]);
+
+    $router->get('/pages/{code}', [
+        'as' => 'admin.pages.list',
+        'uses' => 'LandingPageController@index',
     ]);
 
     $router->get('/product/all', [

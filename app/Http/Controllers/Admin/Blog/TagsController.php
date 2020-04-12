@@ -46,6 +46,7 @@ class TagsController extends BaseTagsController
         $tag = Tag::find($tag);
         \DB::beginTransaction();
         try {
+            $tag->blog()->detach();
             $tag->delete();
             \DB::commit();
         } catch (\Exception $e) {

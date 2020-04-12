@@ -10,11 +10,6 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-$router->get('/', ['middleware' => ['lang'], function () use ($router) {
-	// dd($language);
-    return $router->app->version();
-}]);
-
 $router->post('v1/login/email', [
     'as' => 'login.email', 'uses' => 'Login\LoginController@login'
 ]);

@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Common\CommonResponses;
 use App\Model\CMS\LandingPage\LandingPage;
 use App\Model\CMS\Header\Header;
+use App\Model\Language;
 
 class PageController extends Controller
 {
@@ -22,7 +23,17 @@ class PageController extends Controller
 		$page = Page::where('code', $code)->first();
 
 		if($page) {
-			$language = $this->getLanguage($request);
+			if($request->has('language')) {
+				$language = Language::where('language', $request->language)->first();
+				if($language) {
+					// Do nothing
+				} else {
+					$language = Language::where('language', 'en')->first();
+				}
+			} else {
+				$language = $this->getLanguage($request);
+			}
+
 			$section = $page->sections()->first()->translate($language)->first();
 
 			switch($code) {

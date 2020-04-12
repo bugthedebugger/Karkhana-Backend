@@ -25,26 +25,13 @@ class LandingPage extends PageModel implements SerializerInterface {
         $this->sliders = ListOfSlider::fromJson($data['sliders'] ?? null);
         $this->about = About::fromJson($data['about'] ?? null);
         $this->stats = ListOfStats::fromJson($data['stats'] ?? null);
+        $this->partners = Partners::fromJson($data['partners'] ?? null);
 
         parent::__construct($data);
     }
 
     public function toJson() {
         $settings = Setting::first();
-        $partners = Partner::all();
-
-        if($partners) {
-            foreach($partners as $partner) {
-                $this->partner[] = [
-                    'id' => $partner->id,
-                    'name' => $partner->name,
-                    'logo' => [
-                        'path' => $partner->logo,
-                        'url' => AppUtils::pathToAWSUrl($partner->logo),
-                    ],
-                ];
-            }
-        }
 
         if($settings) {
             $this->phone = $settings->phone;
@@ -54,10 +41,10 @@ class LandingPage extends PageModel implements SerializerInterface {
         return [
             'header' => $this->header ? $this->header->toJson() : null,
             'sliders' => $this->sliders ? $this->sliders->toJson(): null,
-            'about' => $this->about ? $this->about->toJson(): null,
+            'about' => $this->about ? $this->about->toJson() : null,
             'phone' => $this->phone,
             'mobile' => $this->mobile,
-            'partners' => $this->partners,
+            'partners' => $this->partners ? $this->partners->toJson() : null,
             'stats' => $this->stats ? $this->stats->toJson() : null,
             'language' => $this->language,
         ];
