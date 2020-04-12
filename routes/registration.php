@@ -68,4 +68,5 @@ $router->group([
         'as' => 'password.reset.check',
         'uses' => 'PasswordResetController@checkValid', 
     ]);
+    
 });

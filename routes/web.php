@@ -62,3 +62,13 @@ $router->post('/mail', [
     'as' => 'mail.send',
     'uses' => 'DropALine\DropALineMailController@send',
 ]);
+
+$router->get('/team', [
+    'as' => 'team.all',
+    'uses' => 'Profile\TeamController@list',
+]);
+
+$router->get('/team/{id}', [
+    'as' => 'team.index',
+    'uses' => 'Profile\TeamController@index',
+]);

@@ -110,6 +110,31 @@ $router->group([
         'as' => 'admin.partners.delete',
         'uses' => 'PartnersController@delete',
     ]);
+
+    $router->get('/team', [
+        'as' => 'admin.team.all',
+        'uses' => 'TeamController@list',
+    ]);
+
+    $router->post('/team/create', [
+        'as' => 'admin.team.create',
+        'uses' => 'TeamController@create',
+    ]);
+
+    $router->post('/team/update/{id}', [
+        'as' => 'admin.team.update',
+        'uses' => 'TeamController@update',
+    ]);
+
+    $router->get('/team/{id}', [
+        'as' => 'admin.team.index',
+        'uses' => 'TeamController@index',
+    ]);
+
+    $router->delete('/team/{id}', [
+        'as' => 'admin.team.delete',
+        'uses' => 'TeamController@delete',
+    ]);
 });
 
 $router->group([
