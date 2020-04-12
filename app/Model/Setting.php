@@ -28,5 +28,6 @@ class Setting extends Model
         'employees',
         'countried_we_work_in',
         'cities_we_work_in',
+        'brand_video',
     ];
 }

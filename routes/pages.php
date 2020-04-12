@@ -46,6 +46,11 @@ $router->group([
         'uses' => 'ProductDetailsPageController@update',
     ]);
 
+    $router->post('/pages/about/update', [
+        'as' => 'admin.about.update',
+        'uses' => 'AboutPageController@update',
+    ]);
+
     $router->get('/pages/{code}', [
         'as' => 'admin.pages.list',
         'uses' => 'LandingPageController@index',

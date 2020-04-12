@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->startSeed('SettingsPageSeeder');
         $this->startSeed('ContactUsPageSeeder');
         $this->startSeed('ProductDetailsPageSeeder');
+        $this->startSeed('AboutPageSeeder');
     }
 
     public function startSeed($seedClass) {

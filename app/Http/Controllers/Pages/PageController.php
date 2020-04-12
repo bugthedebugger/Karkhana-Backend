@@ -16,6 +16,7 @@ use App\Model\CMS\Header\Header;
 use App\Model\CMS\ContactUsPage\ContactUsPage;
 use App\Model\CMS\ProductsPage\ProductsPage;
 use App\Model\CMS\ProductDetailsPage\ProductDetailsPage;
+use App\Model\CMS\AboutPage\AboutPage;
 use App\Model\Language;
 use App\Model\Product;
 
@@ -71,6 +72,10 @@ class PageController extends Controller
 					} else {
 						return CommonResponses::error('Invalid product code!', 422);
 					}
+					break;
+				case 'about':
+					$data = AboutPage::fromJson($section->data ?? null);
+					$response = $data->toJson();
 					break;
 				default:
 					$response = null;

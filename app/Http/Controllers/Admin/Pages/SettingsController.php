@@ -28,6 +28,7 @@ class SettingsController extends Controller
             'employees' => 'nullable',
             'countried_we_work_in' => 'nullable',
             'cities_we_work_in' => 'nullable',
+            'brand_video' => 'nullable',
         ]);
 
         \DB::beginTransaction();
