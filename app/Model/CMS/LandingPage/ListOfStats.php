@@ -17,8 +17,8 @@ class ListOfStats implements SerializerInterface {
         $employees = $stats['employees'] ?? null;
         $employees['code'] = 'employees';
 
-        $countried_we_work_in  = $stats['countried_we_work_in'] ?? null;
-        $countried_we_work_in['code'] = 'countried_we_work_in';
+        $countries_we_work_in  = $stats['countries_we_work_in'] ?? null;
+        $countries_we_work_in['code'] = 'countries_we_work_in';
 
         $cities_we_work_in = $stats['cities_we_work_in'] ?? null;
         $cities_we_work_in['code'] = 'cities_we_work_in';
@@ -26,7 +26,7 @@ class ListOfStats implements SerializerInterface {
         $this->stats = [
             'students_reached' => Stats::fromJson($students_reached),
             'employees' => Stats::fromJson($employees),
-            'countried_we_work_in' => Stats::fromJson($countried_we_work_in),
+            'countries_we_work_in' => Stats::fromJson($countries_we_work_in),
             'cities_we_work_in' => Stats::fromJson($cities_we_work_in),
         ];
     }
