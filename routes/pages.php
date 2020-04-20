@@ -26,6 +26,11 @@ $router->group([
         'uses' => 'SettingsController@createOrUpdate',
     ]);
 
+    $router->get('/settings', [
+        'as' => 'admin.settings.index',
+        'uses' => 'SettingsController@index',
+    ]);
+
     $router->post('/pages/header/update', [
         'as' => 'admin.header.update',
         'uses' => 'HeadersController@update',

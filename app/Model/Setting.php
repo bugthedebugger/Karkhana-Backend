@@ -26,7 +26,7 @@ class Setting extends Model
         'geo_location',
         'students_reached',
         'employees',
-        'countried_we_work_in',
+        'countries_we_work_in',
         'cities_we_work_in',
         'brand_video',
     ];

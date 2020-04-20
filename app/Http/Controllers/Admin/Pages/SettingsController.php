@@ -11,6 +11,11 @@ use App\Model\Setting;
 class SettingsController extends Controller
 {
 
+    public function index() {
+        $settings =  Setting::first();
+        return CommonResponses::success('success', true, $settings);
+    }
+
     public function createOrUpdate(Request $request) {
         $this->validate($request, [
             'logo' => 'nullable',
@@ -26,7 +31,7 @@ class SettingsController extends Controller
             'geo_location' => 'nullable',
             'students_reached' => 'nullable',
             'employees' => 'nullable',
-            'countried_we_work_in' => 'nullable',
+            'countries_we_work_in' => 'nullable',
             'cities_we_work_in' => 'nullable',
             'brand_video' => 'nullable',
         ]);
