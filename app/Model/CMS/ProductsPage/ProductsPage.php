@@ -39,6 +39,7 @@ class ProductsPage extends PageModel implements SerializerInterface{
 
         $products = Product::all();
         $language = Language::where('language', $this->language)->first();
+        $productList = null;
 
         if($products) {
             foreach($products as $product) {
