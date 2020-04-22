@@ -40,7 +40,7 @@ class ProductsController extends Controller
             'features.*.logo' => 'required',
             'features.*.feature' => 'required',
             'brochure' => 'nullable',
-            'featured_image' => 'nullable',
+            'featured_image' => 'required',
         ]);
         
         $language = Language::where('language', $request->language)->first();
