@@ -143,6 +143,7 @@ class ProductsController extends Controller
                             'path' => $product->logo,
                             'url' => AppUtils::pathToAWSUrl($product->logo),
                         ],
+                        'color' => $product->color,
                         'secondary_color' => $product->secondary_color,
                         'code' => $product->code,
                         'name' => $productTranslation->name,
