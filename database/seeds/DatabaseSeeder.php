@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->startSeed('SeedInformationSeeder');
+        // $this->startSeed('SeedInformationSeeder');
         $this->startSeed('AdminUserSeeder');
         $this->startSeed('LanguageSeeder');
         $this->startSeed('PageSeeder');
