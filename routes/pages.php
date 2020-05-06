@@ -162,6 +162,11 @@ $router->group([
         'uses' => 'PageController@listPages',
     ]);
 
+    $router->get('/partners', [
+        'as' => 'partners.index',
+        'uses' => 'PartnersController@index',
+    ]);
+
     $router->get('/{code}', [
         'as' => 'pages.find.by.code',
         'uses' => 'PageController@index',
