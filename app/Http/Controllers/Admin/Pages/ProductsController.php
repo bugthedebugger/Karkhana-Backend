@@ -182,6 +182,7 @@ class ProductsController extends Controller
             } else {
                 return CommonResponses::error('Invalid product ID!', 422);
             }
+            \DB::commit();
         } catch(\Exception $e) {
             \DB::rollback();
             return CommonResponses::exception($e);
