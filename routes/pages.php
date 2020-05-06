@@ -71,6 +71,11 @@ $router->group([
         'uses' => 'ProductsController@findProductByID',
     ]);
 
+    $router->delete('/product/{id}', [
+        'as' => 'admin.product.delete',
+        'uses' => 'ProductsController@delete',
+    ]);
+
     $router->post('/product/create', [
         'as' => 'admin.product.create',
         'uses' => 'ProductsController@create',

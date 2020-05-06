@@ -68,6 +68,7 @@ class PageController extends Controller
 						$sectionData['code'] = $product->code;
 						
 						$data = ProductDetailsPage::fromJson($sectionData);
+						// dd($data);
 						$response = $data->toJson();
 					} else {
 						return CommonResponses::error('Invalid product code!', 422);

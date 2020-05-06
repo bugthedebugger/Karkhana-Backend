@@ -172,4 +172,20 @@ class ProductsController extends Controller
         } 
         return CommonResponses::error('Invlaid language code', 422);
     }
+
+    public function delete($id) {
+        $product = Product::find($id);
+        \DB::beginTransaction();
+        try {
+            if ($product) {
+                $product->delete();
+            } else {
+                return CommonResponses::error('Invalid product ID!', 422);
+            }
+        } catch(\Exception $e) {
+            \DB::rollback();
+            return CommonResponses::exception($e);
+        }
+        return CommonResponses::success('Product removed successfully!');
+    }
 }
