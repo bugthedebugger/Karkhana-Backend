@@ -34,7 +34,10 @@ class ProductsPageController extends Controller {
                 $sectionData = $request->all();
                 $productsPageDataModel = ProductsPage::fromJson($sectionData);
                 if($sectionTranslation) {
-                    $sectionTranslation->update($sectionData);
+                    $sectionTranslation->update([
+                        'language_id' => $language->id,
+                        'data' => $productsPageDataModel->toJson(),
+                    ]);
                 } else {
                     $section->translations()->create([
                         'language_id' => $language->id,
