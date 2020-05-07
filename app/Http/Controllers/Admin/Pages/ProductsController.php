@@ -120,11 +120,13 @@ class ProductsController extends Controller
 
         foreach($products as $product) {
             $productTranslation = $product->translate($language)->first();
-            $productList[] = [
-                'id' => $product->id,
-                'code' => $product->code,
-                'name' => $productTranslation->name,
-            ];
+            if($productTranslation) {
+                $productList[] = [
+                    'id' => $product->id,
+                    'code' => $product->code,
+                    'name' => $productTranslation->name,
+                ];
+            }
         }
 
         return CommonResponses::success('success', true, $productList);
