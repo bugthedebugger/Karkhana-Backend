@@ -113,9 +113,16 @@ class ProductsController extends Controller
         return CommonResponses::error('Invalid language code!', 422);
     }
 
-    public function all() {
+    public function all(Request $request) {
+
+        if($request->has('lang')) {
+            $lang = $request->lang;
+        } else {
+            $lang = 'en';
+        }
+
         $products = Product::all();
-        $language = Language::where('language', 'en')->first();
+        $language = Language::where('language', $lang)->first();
         $productList = null;
 
         foreach($products as $product) {
